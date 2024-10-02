@@ -21,12 +21,14 @@
   # Enable home-manager
   programs.home-manager.enable = true;
 
+
+
+  programs.kitty.enable = true;
   wayland.windowManager.hyprland = {
 		enable = true;
 		package = inputs.hyprland.packages.${pkgs.system}.default;
 		extraConfig = (import ../modules/hyprland.nix); 
 	};
-
 
   # Configure git
   programs.git = {
