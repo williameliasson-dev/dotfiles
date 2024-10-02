@@ -143,7 +143,7 @@ bind = $mainMod, 9, workspace, 9
 bind = $mainMod, 0, workspace, 10
 
 #Screenshot draggable
-bind = $mainMod SHIFT, P,exec, grim -g "${slurp -d}" - | wl-copy
+bind = $mainMod SHIFT, P,exec, grim -g '${slurp -d}' - | wl-copy
 
 # Move active window to a workspace with mainMod + SHIFT + [0-9]
 bind = $mainMod SHIFT, 1, movetoworkspace, 1
