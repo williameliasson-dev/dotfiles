@@ -8,8 +8,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/Hyprland";
-    hyprwm-contrib.url = "github:hyprwm/contrib";
-
   };
 
   outputs = { self, nixpkgs, home-manager, hyprland, ... } @ inputs: 
@@ -24,7 +22,6 @@
         specialArgs = { inherit inputs outputs; };
         modules = [
           ./configuration.nix
-          hyprland.lib.mkHomeManagerModule
           {programs.hyprland.enable = true;}
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
