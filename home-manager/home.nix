@@ -1,5 +1,4 @@
 { inputs, lib, config, pkgs, ... }:
-
 {
   imports = [
     ../modules/zsh.nix
@@ -9,24 +8,21 @@
   home = {
     username = "william";
     homeDirectory = "/home/william";
-
     # Add stuff for your user as you see fit:
     packages = with pkgs; [ git cmatrix gh ];
-
-    # Nicely reload system units when changing configs
-    stateVersion = "24.05"; # Please read the comment before changing.
+    # Please read the comment before changing:
+    stateVersion = "24.05";
   };
 
   # Enable home-manager
   programs.home-manager.enable = true;
 
-
-
   programs.kitty.enable = true;
+
   wayland.windowManager.hyprland = {
-		enable = true;
-		extraConfig = (import ../modules/hyprland.nix); 
-	};
+    enable = true;
+    extraConfig = (import ../modules/hyprland.nix);
+  };
 
   # Configure git
   programs.git = {
@@ -47,5 +43,11 @@
   };
 
   # Nicely reload system units when changing configs
-  systemd.user.startServices = "sd-switch";
+  home.activation.reloadSystemd = {
+    after = [ "writeBoundary" ];
+    before = [ "reloadSystemd" ];
+    lua = ''
+      os.execute("systemctl --user daemon-reload")
+    '';
+  };
 }
