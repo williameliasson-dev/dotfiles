@@ -24,7 +24,7 @@
         specialArgs = { inherit inputs outputs; };
         modules = [
           ./configuration.nix
-          (hyprland.lib.mkHomeManagerModule
+          hyprland.lib.mkHomeManagerModule
           {programs.hyprland.enable = true;}
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
