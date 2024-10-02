@@ -2,7 +2,6 @@
 
 {
   imports = [
-    	inputs.hyprland.homeManagerModules.default
     ../modules/zsh.nix
     ../modules/waybar.nix
   ];
