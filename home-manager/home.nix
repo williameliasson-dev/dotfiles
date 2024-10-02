@@ -41,13 +41,4 @@
     enable = true;
     initExtra = "fastfetch";
   };
-
-  # Nicely reload system units when changing configs
-  home.activation.reloadSystemd = {
-    after = [ "writeBoundary" ];
-    before = [ "reloadSystemd" ];
-    lua = ''
-      os.execute("systemctl --user daemon-reload")
-    '';
-  };
 }
