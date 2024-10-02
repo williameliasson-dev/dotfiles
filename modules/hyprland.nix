@@ -1,7 +1,6 @@
 "
 monitor=,preferred,auto,1
 exec-once=waybar
-exec=swaybg -i ${./wallp2.jpg} --mode fill
 bind=SUPER,D,exec, rofi -show drun
 bind=SUPER,Q,exec,kitty
 bind=SUPERSHIFT,Q,exit
