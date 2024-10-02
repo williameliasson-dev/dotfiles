@@ -3,6 +3,7 @@
   imports = [
     ../modules/zsh.nix
     ../modules/waybar.nix
+    ../modules/rofi.nix
   ];
 
   home = {
