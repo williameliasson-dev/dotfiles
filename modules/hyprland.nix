@@ -2,10 +2,8 @@
 monitor=,preferred,auto,1
 exec-once=waybar
 exec=swaybg -i ${./wallp2.jpg} --mode fill
-exec-once=mako
-exec-once=swayidle -w timeout 300 'swaylock -f -c 000000'
 bind=SUPER,D,exec, rofi -show drun
-bind=SUPER,RETURN,exec,alacritty
+bind=SUPER,Q,exec,kitty
 bind=SUPERSHIFT,Q,exit
 bind=SUPER,C,killactive
 bind=SUPER, Space, togglefloating,
