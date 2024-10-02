@@ -1,126 +1,182 @@
 "
-monitor=,preferred,auto,1
-exec-once=waybar
-bind=SUPER,D,exec, rofi -show drun
-bind=SUPER,Q,exec,kitty
-bind=SUPERSHIFT,Q,exit
-bind=SUPER,C,killactive
-bind=SUPER, Space, togglefloating,
+
+# See https://wiki.hyprland.org/Configuring/Monitors/
+monitor=,preferred,auto,auto
+
+
+# See https://wiki.hyprland.org/Configuring/Keywords/ for more
+
+# Execute your favorite apps at launch
+# exec-once = waybar & hyprpaper & firefox
+
+# Source a file (multi-file configs)
+# source = ~/.config/hypr/myColors.conf
+
+# Set programs that you use
+$terminal = kitty
+$fileManager = dolphin
+$menu = rofi -show drun
+$windows = rofi -show window
+
+# Some default env vars.
+env = XCURSOR_SIZE,24
+env = QT_QPA_PLATFORMTHEME,qt5ct # change to qt6ct if you have that
+
+# For all categories, see https://wiki.hyprland.org/Configuring/Variables/
+input {
+    kb_layout = se
+    kb_variant =
+    kb_model =
+    kb_options =
+    kb_rules =
+
+    follow_mouse = 1
+
+    touchpad {
+        natural_scroll = no
+    }
+
+    sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
+}
 
 general {
-    layout=dwindle
-    sensitivity=1.0 
-    gaps_in=5
-    gaps_out=20
-    border_size=1.5
-    col.active_border=0xff14747e
-    col.inactive_border=0x517F8D
-    apply_sens_to_raw=0 
+    # See https://wiki.hyprland.org/Configuring/Variables/ for more
+
+    gaps_in = 5
+    gaps_out = 20
+    border_size = 0
+    layout = dwindle
+
+    # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
+    allow_tearing = false
 }
 
 decoration {
-    active_opacity=0.88
-    inactive_opacity=0.68
-    fullscreen_opacity=1.0
-    rounding=5
-    blur=true
-    blur_size=6
-    blur_passes=3
-    blur_new_optimizations=true
-    blur_ignore_opacity=true
-    drop_shadow=true
-    shadow_range=12
-    shadow_offset=3 3
-    col.shadow=0x44000000
-    col.shadow_inactive=0x66000000
+    # See https://wiki.hyprland.org/Configuring/Variables/ for more
+
+    rounding = 10
+    
+    blur {
+        enabled = true
+        size = 3
+        passes = 1
+    }
+
+    drop_shadow = yes
+    shadow_range = 4
+    shadow_render_power = 3
+    col.shadow = rgba(1a1a1aee)
 }
 
-
-blurls=waybar
-
 animations {
-    enabled=1
-    bezier=overshot,0.13,0.99,0.29,1.1
-    animation=windows,1,4.3,overshot,popin
-    animation=fade,1,10,default
-    animation=workspaces,1,6,overshot,slide
-    animation=border,1,10,default
+    enabled = yes
+
+    # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
+
+    bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+
+    animation = windows, 1, 7, myBezier
+    animation = windowsOut, 1, 7, default, popin 80%
+    animation = border, 1, 10, default
+    animation = borderangle, 1, 8, default
+    animation = fade, 1, 7, default
+    animation = workspaces, 1, 6, default
 }
 
 dwindle {
-    pseudotile=1 
-    force_split=0
-    no_gaps_when_only = true
+    # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
+    pseudotile = yes # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+    preserve_split = yes # you probably want this
 }
 
 master {
-  new_on_top=true
-  no_gaps_when_only = true
+    # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
+    new_is_master = true
+}
+
+gestures {
+    # See https://wiki.hyprland.org/Configuring/Variables/ for more
+    workspace_swipe = off
 }
 
 misc {
-  disable_hyprland_logo=true
-  disable_splash_rendering=true
-  mouse_move_enables_dpms=true
-  no_vfr=1
+    # See https://wiki.hyprland.org/Configuring/Variables/ for more
+    force_default_wallpaper = -1 # Set to 0 or 1 to disable the anime mascot wallpapers
 }
 
+# Example per-device config
+# See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
+# Example windowrule v1
+# windowrule = float, ^(kitty)$
+# Example windowrule v2
+# windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
+# See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
+# See https://wiki.hyprland.org/Configuring/Keywords/ for more
+$mainMod = SUPER
 
-windowrule=float,^(rofi)$
-windowrule=forceinput,^(rofi)$
-windowrule=float,title:wlogout
+# Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
+bind = $mainMod, Q, exec, $terminal
+bind = $mainMod, C, killactive, 
+bind = $mainMod, M, exit, 
+bind = $mainMod, E, exec, $fileManager
+bind = $mainMod, V, togglefloating, 
+bind = $mainMod, SPACE, exec, $menu
+bind = $mainMod, TAB, exec, $windows
+bind = $mainMod, P, pseudo, # dwindle
+bind = $mainMod, J, togglesplit, # dwindle
 
-windowrule=opacity 0.88,alacritty
+# Move focus with mainMod + arrow keys
+bind = $mainMod, left, movefocus, l
+bind = $mainMod, right, movefocus, r
+bind = $mainMod, up, movefocus, u
+bind = $mainMod, down, movefocus, d
 
-bind=SUPER,j,movefocus,d
-bind=SUPER,k,movefocus,u
+# Switch workspaces with mainMod + [0-9]
+bind = $mainMod, 1, workspace, 1
+bind = $mainMod, 2, workspace, 2
+bind = $mainMod, 3, workspace, 3
+bind = $mainMod, 4, workspace, 4
+bind = $mainMod, 5, workspace, 5
+bind = $mainMod, 6, workspace, 6
+bind = $mainMod, 7, workspace, 7
+bind = $mainMod, 8, workspace, 8
+bind = $mainMod, 9, workspace, 9
+bind = $mainMod, 0, workspace, 10
 
-bind=SUPER,h,movefocus,l
-bind=SUPER,l,movefocus,r
+#Screenshot draggable
+bind = $mainMod SHIFT, P,exec, grim -g "$(slurp -d)" - | wl-copy
 
-bind=SUPER,left,resizeactive,-40 0
-bind=SUPER,right,resizeactive,40 0
+# Move active window to a workspace with mainMod + SHIFT + [0-9]
+bind = $mainMod SHIFT, 1, movetoworkspace, 1
+bind = $mainMod SHIFT, 2, movetoworkspace, 2
+bind = $mainMod SHIFT, 3, movetoworkspace, 3
+bind = $mainMod SHIFT, 4, movetoworkspace, 4
+bind = $mainMod SHIFT, 5, movetoworkspace, 5
+bind = $mainMod SHIFT, 6, movetoworkspace, 6
+bind = $mainMod SHIFT, 7, movetoworkspace, 7
+bind = $mainMod SHIFT, 8, movetoworkspace, 8
+bind = $mainMod SHIFT, 9, movetoworkspace, 9
+bind = $mainMod SHIFT, 0, movetoworkspace, 10
 
-bind=SUPER,up,resizeactive,0 -40
-bind=SUPER,down,resizeactive,0 40
+# Example special workspace (scratchpad)
+bind = $mainMod, S, togglespecialworkspace, magic
+bind = $mainMod SHIFT, S, movetoworkspace, special:magic
 
-bind=SUPERSHIFT,h,movewindow,l
-bind=SUPERSHIFT,l,movewindow,r
-bind=SUPERSHIFT,k,movewindow,u
-bind=SUPERSHIFT,j,movewindow,d
+# Scroll through existing workspaces with mainMod + scroll
+bind = $mainMod, mouse_down, workspace, e+1
+bind = $mainMod, mouse_up, workspace, e-1
 
-bind=SUPER,1,workspace,1
-bind=SUPER,2,workspace,2
-bind=SUPER,3,workspace,3
-bind=SUPER,4,workspace,4
-bind=SUPER,5,workspace,5
-bind=SUPER,6,workspace,6
-bind=SUPER,7,workspace,7
-bind=SUPER,8,workspace,8
-bind=SUPER,9,workspace,9
-bind=SUPER,0,workspace,10
+# Move/resize windows with mainMod + LMB/RMB and dragging
+bindm = $mainMod, mouse:272, movewindow
+bindm = $mainMod, mouse:273, resizewindow
 
-bind=SUPERSHIFT,1,movetoworkspacesilent,1
-bind=SUPERSHIFT,2,movetoworkspacesilent,2
-bind=SUPERSHIFT,3,movetoworkspacesilent,3
-bind=SUPERSHIFT,4,movetoworkspacesilent,4
-bind=SUPERSHIFT,5,movetoworkspacesilent,5
-bind=SUPERSHIFT,6,movetoworkspacesilent,6
-bind=SUPERSHIFT,7,movetoworkspacesilent,7
-bind=SUPERSHIFT,8,movetoworkspacesilent,8
-bind=SUPERSHIFT,9,movetoworkspacesilent,9
-bind=SUPERSHIFT,0,movetoworkspacesilent,10
 
-bind=,Print,exec,grimblast --notify copy output
-bind=ALT_SHIFT,1,exec,grimblast --notify copysave active
-bind=ALT_SHIFT,2,exec,grimblast --notify copysave screen
-bind=ALT_SHIFT,3,exec,grimblast --notify copysave window
-bind=ALT_SHIFT,4,exec,grimblast --notify copysave area
+#Monitors
+monitor=,preferred,auto,1
 
-bind=ALT_SHIFT,l,exec,wlogout
 
-bind=,XF86AudioRaiseVolume,exec,pactl set-sink-volume @DEFAULT_SINK@ +5%
-bind=,XF86AudioLowerVolume,exec,pactl set-sink-volume @DEFAULT_SINK@ -5%
-bind=,XF86AudioMute,exec,pactl set-sink-mute @DEFAULT_SINK@ toggle
+# Start on launch
+
+exec-once=waybar
 "
 
