@@ -7,9 +7,12 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland.url = "github:hyprwm/Hyprland";
+    hyprwm-contrib.url = "github:hyprwm/contrib";
+
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs: 
+  outputs = { self, nixpkgs, home-manager, hyprland, ... } @ inputs: 
   let
     inherit (self) outputs;
     system = "x86_64-linux";
@@ -21,6 +24,8 @@
         specialArgs = { inherit inputs outputs; };
         modules = [
           ./configuration.nix
+          (hyprland.lib.mkHomeManagerModule
+          {programs.hyprland.enable = true;}
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
