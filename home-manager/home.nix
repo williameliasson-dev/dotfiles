@@ -38,7 +38,6 @@
   };
 
   # Enable and configure other programs
-  programs.neovim.enable = true;
   programs.gh.enable = true;
   programs.zsh = {
     enable = true;
