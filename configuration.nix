@@ -96,7 +96,6 @@ services.displayManager.sddm = {
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -136,7 +135,7 @@ services.displayManager.sddm = {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  fastfetch wl-clipboard ripgrep steam lutris corectrl
+  fastfetch wl-clipboard ripgrep steam lutris corectrl pavucontrol
   ];
 
   programs.steam.enable = true;
