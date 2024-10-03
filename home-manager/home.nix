@@ -5,6 +5,7 @@
     ../modules/waybar.nix
     ../modules/rofi.nix
     ../modules/vim.nix
+     inputs.nixvim.homeManagerModules.nixvim
   ];
 
   home = {
