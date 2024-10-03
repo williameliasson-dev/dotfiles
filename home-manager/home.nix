@@ -4,6 +4,7 @@
     ../modules/zsh.nix
     ../modules/waybar.nix
     ../modules/rofi.nix
+    ../modules/vim.nix
   ];
 
   home = {
