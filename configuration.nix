@@ -124,6 +124,10 @@ services.displayManager.sddm = {
     ];
   };
 
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable = true;
+
   programs.zsh.enable = true;
 
   # Install firefox.

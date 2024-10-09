@@ -18,8 +18,7 @@
   };
 
   # Enable home-manager
-  programs.home-manager.enable = true;
-
+  programs.home-manager.enable = true; 
   programs.kitty.enable = true;
 
   wayland.windowManager.hyprland = {
