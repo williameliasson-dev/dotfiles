@@ -1,122 +1,121 @@
-{ pkgs, ... }:
 {
-    programs.waybar = {
-        enable = true;
-        settings = {
-            primary = {
-            mode = "dock";
-            height = 30;
-            margin = "6";
-            spacing = 5;
-            modules-left = [
-              "custom/menu" 
-              "wlr/workspaces"];
-            modules-center = [
-                "clock"
-                ];
-            modules-right = [
-                "cpu"
-                "memory"
-                "network"
-                "pulseaudio"
-                "battery"
-                "tray"
-                "custom/exit"
-                "custom/hostname"
-                ];
-            "wlr/workspaces" = {
-                "format" = "{icon}";
-                "on-click" = "activate";
-                "format-icons"= {
-                    "1" = "";
-                    "2" = "";
-                    "3" = "";
-                    "4" = "";
-                    "5" = "";
-                    "urgent" = "";
-                    "active" = "";
-                    "default" = "";
-                };
-            };
-            "clock" = {
-                "format" = "<span> </span>{:%m/%d %H:%M}";
-                "tooltip-format" = "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>";
-                "on-click" = "calendar";
-            };
-            "cpu"= {
-                "interval" = 10;
-                "format" = " {}%";
-                "max-length" = 10;
-                "on-click" = "";
-                };
-            "memory" = {
-                "interval" = 30;
-                "format" = " {}%";
-                "format-alt" = " {used:0.1f}G";
-                "max-length" = 10;
-            };
-
-            "network" = {
-                "format-wifi" = "直 {signalStrength}%";
-                "format-ethernet" = " wired";
-                "format-disconnected" = "睊";
-                "on-click" = "bash ~/.config/waybar/scripts/rofi-wifi-menu.sh";
-            };
-
-            "battery" = {
-                "bat" = "BAT0";
-                "adapter" = "ADP0";
-                "interval" = 60;
-                "states" = {
-                    "warning" = 30;
-                    "critical" = 15;
-                };
-                "max-length" = 20;
-                "format" = "{icon} {capacity}%";
-                "format-warning" = "{icon} {capacity}%";
-                "format-critical" = "{icon} {capacity}%";
-                "format-charging" = "<span font-family='Font Awesome 6 Free'></span> {capacity}%";
-                "format-plugged" = "  {capacity}%";
-                "format-alt" = "{icon} {time}";
-                "format-full" = "  {capacity}%";
-                "format-icons" = [" " " " " " " " " "];
-                };
-            
-            "tray" = {
-                "spacing" = 10;
-            };
-
-            "custom/menu" = {
-              "format" = "";
-              "on-click" = "rofi -show drun";
-            };
-
-            "custom/hostname" = {
-              "exec" = "echo $USER@$(hostname)";
-              "on-click" = "alacritty";
-            };
-
-            "custom/exit" = {
-              "format" = "";
-              "on-click" = "wlogout";
-            };
-
-            "pulseaudio" = {
-                "format" = "{icon}  {volume}%";
-                "format-muted" = "   0%";
-                "format-icons" = {
-                  "headphone" = "";
-                  "headset" = "";
-                  "portable" = "";
-                  "default" = [ "" "" "" ];
-                };
-                "on-click" = "pavucontrol";
-              };
-
+  programs.waybar = {
+    enable = true;
+    settings = {
+      primary = {
+        mode = "dock";
+        height = 30;
+        margin = "6";
+        spacing = 5;
+        modules-left = [
+          "custom/menu"
+          "wlr/workspaces"
+        ];
+        modules-center = [
+          "clock"
+        ];
+        modules-right = [
+          "cpu"
+          "memory"
+          "network"
+          "pulseaudio"
+          "battery"
+          "tray"
+          "custom/exit"
+          "custom/hostname"
+        ];
+        "wlr/workspaces" = {
+          "format" = "{icon}";
+          "on-click" = "activate";
+          "format-icons" = {
+            "1" = "";
+            "2" = "";
+            "3" = "";
+            "4" = "";
+            "5" = "";
+            "urgent" = "";
+            "active" = "";
+            "default" = "";
+          };
         };
+        "clock" = {
+          "format" = "<span> </span>{:%m/%d %H:%M}";
+          "tooltip-format" = "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>";
+          "on-click" = "calendar";
+        };
+        "cpu" = {
+          "interval" = 10;
+          "format" = " {}%";
+          "max-length" = 10;
+          "on-click" = "";
+        };
+        "memory" = {
+          "interval" = 30;
+          "format" = " {}%";
+          "format-alt" = " {used:0.1f}G";
+          "max-length" = 10;
+        };
+
+        "network" = {
+          "format-wifi" = "直 {signalStrength}%";
+          "format-ethernet" = " wired";
+          "format-disconnected" = "睊";
+          "on-click" = "bash ~/.config/waybar/scripts/rofi-wifi-menu.sh";
+        };
+
+        "battery" = {
+          "bat" = "BAT0";
+          "adapter" = "ADP0";
+          "interval" = 60;
+          "states" = {
+            "warning" = 30;
+            "critical" = 15;
+          };
+          "max-length" = 20;
+          "format" = "{icon} {capacity}%";
+          "format-warning" = "{icon} {capacity}%";
+          "format-critical" = "{icon} {capacity}%";
+          "format-charging" = "<span font-family='Font Awesome 6 Free'></span> {capacity}%";
+          "format-plugged" = "  {capacity}%";
+          "format-alt" = "{icon} {time}";
+          "format-full" = "  {capacity}%";
+          "format-icons" = [ " " " " " " " " " " ];
+        };
+
+        "tray" = {
+          "spacing" = 10;
+        };
+
+        "custom/menu" = {
+          "format" = "";
+          "on-click" = "rofi -show drun";
+        };
+
+        "custom/hostname" = {
+          "exec" = "echo $USER@$(hostname)";
+          "on-click" = "alacritty";
+        };
+
+        "custom/exit" = {
+          "format" = "";
+          "on-click" = "wlogout";
+        };
+
+        "pulseaudio" = {
+          "format" = "{icon}  {volume}%";
+          "format-muted" = "   0%";
+          "format-icons" = {
+            "headphone" = "";
+            "headset" = "";
+            "portable" = "";
+            "default" = [ "" "" "" ];
+          };
+          "on-click" = "pavucontrol";
+        };
+      };
     };
 
-        style = ''
+    style = ''
         * {
         font-family: JetBrainsMono Nerd Font;
         font-size: 12pt;
@@ -141,7 +140,7 @@
         border: 2px solid #14747e;
         border-radius: 10px;
       }
-   
+
       #workspaces button {
         padding: 0 5px;
         color: #7984A4;
@@ -165,7 +164,7 @@
         #workspaces button.urgent {
         background-color: #eb4d4b;
         }
-      
+
       #clock {
         padding-left: 15px;
         padding-right: 15px;
@@ -203,7 +202,6 @@
         border-radius: 10px;
         }
 
-      '';
-    };
+    '';
+  };
 }
-

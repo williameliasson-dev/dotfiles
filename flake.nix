@@ -10,28 +10,37 @@
     nixvim = {
       url = "github:nix-community/nixvim/nixos-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
-    };  };
-
-  outputs = { self, nixpkgs, home-manager, nixvim, ... } @ inputs: 
-  let
-    inherit (self) outputs;
-    system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
-  in {
-    nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs outputs; };
-        modules = [
-          ./configuration.nix
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true; 
-            home-manager.extraSpecialArgs = { inherit inputs outputs; };
-            home-manager.users.william = import ./home-manager/home.nix;
-          }
-        ];
-      };
     };
   };
+
+  outputs =
+    { self
+    , nixpkgs
+    , home-manager
+    , nixvim
+    , ...
+    } @ inputs:
+    let
+      inherit (self) outputs;
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+    {
+      nixosConfigurations = {
+        nixos = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            ./configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit inputs outputs; };
+              home-manager.users.william = import ./home-manager/home.nix;
+            }
+          ];
+        };
+      };
+    };
 }

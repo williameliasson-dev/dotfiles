@@ -1,46 +1,36 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
+{ inputs
+, lib
+, config
+, pkgs
+, ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
-{
-  inputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+  nix =
+    let
+      flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+    in
+    {
+      settings = {
+        # Enable flakes and new 'nix' command
+        experimental-features = "nix-command flakes";
+        # Opinionated: disable global registry
+        flake-registry = "";
+        # Workaround for https://github.com/NixOS/nix/issues/9574
+        nix-path = config.nix.nixPath;
+      };
+      channel.enable = true;
 
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
-
-
-
-
-
-  nix = let
-    flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-  in {
-    settings = {
-      # Enable flakes and new 'nix' command
-      experimental-features = "nix-command flakes";
-      # Opinionated: disable global registry
-      flake-registry = "";
-      # Workaround for https://github.com/NixOS/nix/issues/9574
-      nix-path = config.nix.nixPath;
+      # Opinionated: make flake registry and nix path match flake inputs
+      registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
+      nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
     };
-    channel.enable = true;
-
-    # Opinionated: make flake registry and nix path match flake inputs
-    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
-    nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
-  };
-
-
-
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -82,12 +72,12 @@
     layout = "se";
     xkbVariant = "";
     enable = true;
-     };
+  };
 
-services.displayManager.sddm = {
-	enable = true;
-	wayland.enable = true;
-    };
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+  };
 
   # Configure console keymap
   console.keyMap = "sv-latin1";
@@ -116,11 +106,11 @@ services.displayManager.sddm = {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.william = {
     isNormalUser = true;
-    shell=pkgs.zsh;
+    shell = pkgs.zsh;
     description = "william";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
@@ -139,11 +129,16 @@ services.displayManager.sddm = {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  fastfetch wl-clipboard ripgrep steam lutris corectrl pavucontrol
+    fastfetch
+    wl-clipboard
+    ripgrep
+    steam
+    lutris
+    corectrl
+    pavucontrol
   ];
 
   programs.steam.enable = true;
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

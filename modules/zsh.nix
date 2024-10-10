@@ -1,5 +1,4 @@
-{ config, pkgs, lib, ... }:
-
+{ pkgs, ... }:
 let
   # Define any local variables here
   customAliases = {
@@ -11,14 +10,13 @@ in
 {
   # Enable Zsh system-wide
   programs.zsh = {
+    enable = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    oh-my-zsh = {
       enable = true;
-      autosuggestion.enable= true;
-      syntaxHighlighting.enable = true;
-      oh-my-zsh = {
-         enable = true;
-         theme = "af-magic";
-        };
-   
+      theme = "af-magic";
+    };
 
     shellAliases = customAliases;
 
@@ -43,5 +41,4 @@ in
 
   # Ensure Zsh is available
   home.packages = with pkgs; [ zsh ];
-
 }
