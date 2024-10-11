@@ -3,6 +3,7 @@
 , ...
 }: {
   imports = [
+    ../modules/kitty.nix
     ../modules/zsh.nix
     ../modules/waybar.nix
     ../modules/rofi.nix
@@ -19,11 +20,9 @@
     stateVersion = "24.05";
   };
 
-  # Enable home-manager
-
   programs = {
+    btop.enable = true;
     home-manager.enable = true;
-    kitty.enable = true;
     git = {
       enable = true;
       userName = "williameliasson-dev";

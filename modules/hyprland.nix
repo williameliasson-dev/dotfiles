@@ -1,6 +1,6 @@
 "
 # See https://wiki.hyprland.org/Configuring/Monitors/
-monitor=,preferred,auto,auto
+monitor= DP-3 ,3440x1440@99.98,0x0, 1
 
 
 # See https://wiki.hyprland.org/Configuring/Keywords/ for more
@@ -169,13 +169,7 @@ bind = $mainMod, mouse_up, workspace, e-1
 bindm = $mainMod, mouse:272, movewindow
 bindm = $mainMod, mouse:273, resizewindow
 
-
-#Monitors
-monitor=,preferred,auto,1
-
-
 # Start on launch
 
 exec-once=waybar
 "
-
