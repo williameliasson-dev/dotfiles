@@ -45,21 +45,21 @@
         };
         "cpu" = {
           "interval" = 10;
-          "format" = " {}%";
+          "format" = " {}%";
           "max-length" = 10;
           "on-click" = "";
         };
         "memory" = {
           "interval" = 30;
-          "format" = " {}%";
+          "format" = " {}%";
           "format-alt" = " {used:0.1f}G";
           "max-length" = 10;
         };
 
         "network" = {
-          "format-wifi" = "直 {signalStrength}%";
-          "format-ethernet" = " wired";
-          "format-disconnected" = "睊";
+          "format-wifi" = " {signalStrength}%";
+          "format-ethernet" = "󰈀 wired";
+          "format-disconnected" = "";
           "on-click" = "bash ~/.config/waybar/scripts/rofi-wifi-menu.sh";
         };
 
@@ -93,7 +93,7 @@
 
         "custom/hostname" = {
           "exec" = "echo $USER@$(hostname)";
-          "on-click" = "alacritty";
+          "on-click" = "kitty";
         };
 
         "custom/exit" = {
@@ -102,11 +102,11 @@
         };
 
         "pulseaudio" = {
-          "format" = "{icon}  {volume}%";
-          "format-muted" = "   0%";
+          "format" = "{icon} {volume}%";
+          "format-muted" = " 0%";
           "format-icons" = {
             "headphone" = "";
-            "headset" = "";
+            "headset" = "󰋎";
             "portable" = "";
             "default" = [ "" "" "" ];
           };

@@ -8,8 +8,8 @@
       font: "Monospace 16";
       show-icons: true;
       icon-theme: "Papirus";
-      display-drun: "";
-      display-window: "﩯 ";
+      display-drun: "󰌧 ";
+      display-window: " ";
       display-combi: "  ";
     }
     @theme "solarized"
