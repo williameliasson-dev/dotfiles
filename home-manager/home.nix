@@ -8,6 +8,7 @@
     ../modules/waybar.nix
     ../modules/rofi.nix
     ../modules/vim.nix
+    ../modules/hyprpaper.nix
     inputs.nixvim.homeManagerModules.nixvim
   ];
 

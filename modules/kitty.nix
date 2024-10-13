@@ -15,7 +15,6 @@
 
       # Color scheme
       background = "#262626";
-      background_opacity = 50;
       foreground = "#D4D4D4";
       cursor = "#FFFFFF";
 
@@ -31,6 +30,8 @@
 
     extraConfig = ''
       # Any additional configuration that doesn't fit into the settings attribute
+
+      background_opacity 0.9
 
       # For example, complex key mappings:
       map ctrl+shift+d new_tab_with_cwd
