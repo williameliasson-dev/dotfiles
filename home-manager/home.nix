@@ -16,7 +16,7 @@
     username = "william";
     homeDirectory = "/home/william";
     # Add stuff for your user as you see fit:
-    packages = with pkgs; [ git cmatrix gh yazi nerdfonts ];
+    packages = with pkgs; [ git cmatrix gh yazi nerdfonts devenv ];
     # Please read the comment before changing:
     stateVersion = "24.05";
   };
