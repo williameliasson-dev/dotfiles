@@ -96,7 +96,7 @@
 
         "custom/power" = {
           format = "󰐥";
-          on-click = "wlogout";
+          on-click = "hyprctl dispatch exit";
           tooltip = false;
         };
       };

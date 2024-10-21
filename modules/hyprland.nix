@@ -123,6 +123,7 @@ bind = $mainMod, D, exec, $menu
 bind = $mainMod, TAB, exec, $windows
 bind = $mainMod, P, pseudo, # dwindle
 bind = $mainMod, J, togglesplit, # dwindle
+bind = $mainMod, F, exec, fullscreen
 
 # Move focus with mainMod + arrow keys
 bind = $mainMod, left, movefocus, l
