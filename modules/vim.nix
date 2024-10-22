@@ -12,6 +12,31 @@
       }
     ];
     keymaps = [
+      # HOP
+
+      {
+        key = "f";
+        action.__raw = "function() require('hop').hint_char1({ direction = require('hop.hint').HintDirection.AFTER_CURSOR, current_line_only = true }) end";
+        options.remap = true;
+      }
+      {
+        key = "F";
+        action.__raw = "function() require('hop').hint_char1({ direction = require('hop.hint').HintDirection.AFTER_CURSOR }) end";
+        options.remap = true;
+      }
+      {
+        key = "h";
+        action.__raw = "function() require('hop').hint_char1({ direction = require('hop.hint').HintDirection.BEFORE_CURSOR, current_line_only = true }) end";
+        options.remap = true;
+      }
+      {
+        key = "H";
+        action.__raw = "function() require('hop').hint_char1({ direction = require('hop.hint').HintDirection.BEFORE_CURSOR }) end";
+        options.remap = true;
+      }
+
+      #TELESCOPE
+
       {
         action = "<cmd>Telescope live_grep<CR>";
         key = "<leader>fw";
@@ -42,9 +67,32 @@
         action = "<cmd>w<cr><esc>";
         options = { desc = "Save File"; };
       }
+
+      #NONE-LS
+
+      {
+        key = "<leader>dl";
+        action.__raw = ''
+          function()
+            vim.diagnostic.open_float({ scope = "line" })
+          end
+        '';
+        options = {
+          desc = "View current line diagnostics";
+          silent = true;
+        };
+      }
     ];
 
     plugins = {
+      which-key = {
+        enable = true;
+      };
+
+      hop = {
+        enable = true;
+      };
+
       none-ls = {
         enable = true;
         sources = {
