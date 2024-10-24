@@ -16,21 +16,11 @@
 
       {
         key = "f";
-        action.__raw = "function() require('hop').hint_char1({ direction = require('hop.hint').HintDirection.AFTER_CURSOR, current_line_only = true }) end";
-        options.remap = true;
-      }
-      {
-        key = "F";
         action.__raw = "function() require('hop').hint_char1({ direction = require('hop.hint').HintDirection.AFTER_CURSOR }) end";
         options.remap = true;
       }
       {
-        key = "h";
-        action.__raw = "function() require('hop').hint_char1({ direction = require('hop.hint').HintDirection.BEFORE_CURSOR, current_line_only = true }) end";
-        options.remap = true;
-      }
-      {
-        key = "H";
+        key = "F";
         action.__raw = "function() require('hop').hint_char1({ direction = require('hop.hint').HintDirection.BEFORE_CURSOR }) end";
         options.remap = true;
       }
