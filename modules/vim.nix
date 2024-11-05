@@ -11,6 +11,7 @@
         command = "lua vim.lsp.buf.format()";
       }
     ];
+
     keymaps = [
       # HOP
 
@@ -47,6 +48,7 @@
         action = "<cmd>Telescope colorscheme<CR>";
         key = "<leader>ch";
       }
+
       {
         action = "<cmd>Telescope man_pages<CR>";
         key = "<leader>fm";
@@ -76,12 +78,17 @@
       # CMP
       {
         mode = "i";
-        key = "<Tab>";
+        key = "<CR>";
         action.__raw = ''
           function()
-            return require('cmp').mapping.confirm({select = true})()
+            local cmp = require('cmp')
+            if cmp.visible() then
+              return cmp.mapping.confirm({select = true})()
+            end
+            return "<Ignore><CR>"
           end
         '';
+        options.expr = true;
         options.silent = true;
       }
       {
@@ -89,7 +96,10 @@
         key = "<C-j>";
         action.__raw = ''
           function()
-            return require('cmp').mapping.select_next_item()()
+            local cmp = require('cmp')
+            if cmp.visible() then
+              return cmp.mapping.select_next_item()()
+            end
           end
         '';
         options.silent = true;
@@ -99,7 +109,10 @@
         key = "<C-k>";
         action.__raw = ''
           function()
-            return require('cmp').mapping.select_prev_item()()
+            local cmp = require('cmp')
+            if cmp.visible() then
+              return cmp.mapping.select_prev_item()()
+            end
           end
         '';
         options.silent = true;
@@ -109,7 +122,10 @@
         key = "<C-e>";
         action.__raw = ''
           function()
-            return require('cmp').mapping.abort()()
+            local cmp = require('cmp')
+            if cmp.visible() then
+              return cmp.mapping.abort()()
+            end
           end
         '';
         options = {
@@ -174,6 +190,10 @@
         enable = true;
       };
 
+      presence-nvim = {
+        enable = true;
+      };
+
       # Language server
       lsp = {
         enable = true;
@@ -204,8 +224,11 @@
             installRustc = true;
             installCargo = true;
             settings = {
+              procMacro = {
+                enable = true;
+              };
               checkOnSave = true;
-              check.command = "clippy";
+              command = "clippy";
             };
           };
         };
