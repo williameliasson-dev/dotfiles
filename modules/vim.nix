@@ -72,11 +72,67 @@
           silent = true;
         };
       }
+
+      # CMP
+      {
+        mode = "i";
+        key = "<Tab>";
+        action.__raw = ''
+          function()
+            return require('cmp').mapping.confirm({select = true})()
+          end
+        '';
+        options.silent = true;
+      }
+      {
+        mode = "i";
+        key = "<C-j>";
+        action.__raw = ''
+          function()
+            return require('cmp').mapping.select_next_item()()
+          end
+        '';
+        options.silent = true;
+      }
+      {
+        mode = "i";
+        key = "<C-k>";
+        action.__raw = ''
+          function()
+            return require('cmp').mapping.select_prev_item()()
+          end
+        '';
+        options.silent = true;
+      }
+      {
+        mode = "i";
+        key = "<C-e>";
+        action.__raw = ''
+          function()
+            return require('cmp').mapping.abort()()
+          end
+        '';
+        options = {
+          silent = true;
+          desc = "Cancel completion";
+        };
+      }
     ];
 
     plugins = {
       which-key = {
         enable = true;
+      };
+
+      luasnip.enable = true;
+      cmp = {
+        enable = true;
+        autoEnableSources = true;
+        settings.sources = [
+          { name = "nvim_lsp"; }
+          { name = "path"; }
+          { name = "buffer"; }
+        ];
       };
 
       hop = {
@@ -147,6 +203,10 @@
             enable = true;
             installRustc = true;
             installCargo = true;
+            settings = {
+              checkOnSave = true;
+              check.command = "clippy";
+            };
           };
         };
       };
