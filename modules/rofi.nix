@@ -2,6 +2,7 @@
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
+    font = "FiraCode Nerd Font Mono";
   };
 
   xdg.configFile."rofi/gruvbox-material.rasi".text = ''
@@ -16,7 +17,6 @@
         bg1: #32302f;
         grey0: #7c6f64;
         fg0: #d4be98;
-
         blue: #7daea3;
         red: #ea6962;
         orange: #e78a4e;
@@ -28,8 +28,7 @@
 
     window {
         height: 600;
-        width: 600;
-
+        width: 800;
         border: 1;
         border-radius: 10;
         border-color: @bgStatusline3;

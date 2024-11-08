@@ -78,18 +78,12 @@
       # CMP
       {
         mode = "i";
-        key = "<CR>";
-        action.__raw = ''
-          function()
-            local cmp = require('cmp')
-            if cmp.visible() then
-              return cmp.mapping.confirm({select = true})()
-            end
-            return "<Ignore><CR>"
-          end
-        '';
-        options.expr = true;
-        options.silent = true;
+        key = "<Tab>";
+        action.__raw = "function() local cmp = require('cmp') if cmp.visible() then return cmp.mapping.confirm({select = true})() end return '<Tab>' end";
+        options = {
+          expr = true;
+          silent = true;
+        };
       }
       {
         mode = "i";
@@ -141,14 +135,23 @@
       };
 
       luasnip.enable = true;
+
       cmp = {
         enable = true;
         autoEnableSources = true;
-        settings.sources = [
-          { name = "nvim_lsp"; }
-          { name = "path"; }
-          { name = "buffer"; }
-        ];
+        settings = {
+          snippet = {
+            expand = ''              function(args)
+                          require('luasnip').lsp_expand(args.body)
+                        end'';
+          };
+          sources = [
+            { name = "luasnip"; }
+            { name = "nvim_lsp"; }
+            { name = "path"; }
+            { name = "buffer"; }
+          ];
+        };
       };
 
       hop = {
