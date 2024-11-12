@@ -27,6 +27,10 @@
       };
       channel.enable = true;
 
+      extraOptions = ''
+        trusted-users = root william
+      '';
+
       # Opinionated: make flake registry and nix path match flake inputs
       registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
       nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
@@ -66,10 +70,18 @@
 
   services = {
     xserver = {
-      layout = "se";
-      xkbVariant = "";
+      xkb = {
+        layout = "se";
+        variant = "";
+      };
       enable = true;
     };
+
+    udev.packages = with pkgs; [
+      ledger-udev-rules
+      trezor-udev-rules
+      # potentially even more if you need them
+    ];
 
     printing.enable = true;
 
@@ -104,7 +116,7 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "william";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "plugdev" ];
     packages = with pkgs; [
       #  thunderbird
     ];
@@ -113,10 +125,6 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
   programs.zsh.enable = true;
-
-  # Install firefox.
-  programs.firefox.enable = true;
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 

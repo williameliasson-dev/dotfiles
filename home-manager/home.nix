@@ -15,9 +15,24 @@
   home = {
     username = "william";
     homeDirectory = "/home/william";
-    # Add stuff for your user as you see fit:
-    packages = with pkgs; [ git cmatrix gh yazi nerdfonts devenv xwayland discord wl-clipboard kubectl sshfs spotify ];
-    # Please read the comment before changing:
+    packages = with pkgs; [
+      git
+      cmatrix
+      gh
+      yazi
+      nerdfonts
+      devenv
+      xwayland
+      discord
+      wl-clipboard
+      kubectl
+      sshfs
+      spotify
+      docker
+      docker-compose
+      ledger-live-desktop
+      firefox-bin
+    ];
     stateVersion = "24.05";
   };
 
@@ -39,7 +54,6 @@
     extraConfig = import ../modules/hyprland.nix;
   };
 
-  # Enable and configure other programs
   programs.gh.enable = true;
   programs.zsh = {
     enable = true;

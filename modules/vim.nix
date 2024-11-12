@@ -130,6 +130,10 @@
     ];
 
     plugins = {
+      web-devicons = {
+        enable = true;
+      };
+
       which-key = {
         enable = true;
       };
@@ -202,27 +206,27 @@
         enable = true;
         servers = {
           # Average webdev LSPs
-          tsserver.enable = true; # TS/JS
+          ts_ls.enable = true; # TS/JS
           cssls.enable = true; # CSS
           tailwindcss.enable = true; # TailwindCSS
           html.enable = true; # HTML
           pyright.enable = true; # Python
           marksman.enable = true; # Markdown
-          nil-ls.enable = true; # Nix
+          nil_ls.enable = true; # Nix
           dockerls.enable = true; # Docker
           bashls.enable = true; # Bash
           clangd.enable = true; # C/C++
-          csharp-ls.enable = true; # C#
+          csharp_ls.enable = true; # C#
           yamlls.enable = true; # YAML
 
-          lua-ls = {
+          lua_ls = {
             # Lua
             enable = true;
             settings.telemetry.enable = false;
           };
 
           # Rust
-          rust-analyzer = {
+          rust_analyzer = {
             enable = true;
             installRustc = true;
             installCargo = true;
