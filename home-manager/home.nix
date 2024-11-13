@@ -32,6 +32,7 @@
       docker-compose
       ledger-live-desktop
       firefox-bin
+      adwaita-icon-theme
     ];
     stateVersion = "24.05";
   };

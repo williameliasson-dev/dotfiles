@@ -4,7 +4,6 @@
     defaultEditor = true;
     colorschemes.gruvbox.enable = true;
     globals.mapleader = " ";
-
     autoCmd = [
       {
         event = "BufWritePre";
@@ -78,10 +77,9 @@
       # CMP
       {
         mode = "i";
-        key = "<Tab>";
-        action.__raw = "function() local cmp = require('cmp') if cmp.visible() then return cmp.mapping.confirm({select = true})() end return '<Tab>' end";
+        key = "<C-y>";
+        action = "<Cmd>lua require('cmp').confirm({ select = true })<CR>";
         options = {
-          expr = true;
           silent = true;
         };
       }
@@ -205,7 +203,6 @@
       lsp = {
         enable = true;
         servers = {
-          # Average webdev LSPs
           ts_ls.enable = true; # TS/JS
           cssls.enable = true; # CSS
           tailwindcss.enable = true; # TailwindCSS

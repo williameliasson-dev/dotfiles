@@ -90,6 +90,16 @@
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
+      jack.enable = true;
+      wireplumber.enable = true;
+      audio.enable = true;
+      # Use extraConfig instead of config
+      extraConfig.pipewire = {
+        "context.properties" = {
+          "default.clock.rate" = 48000;
+          "default.clock.allowed-rates" = [ 44100 48000 96000 ];
+        };
+      };
     };
 
     blueman.enable = true;
@@ -116,14 +126,39 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "william";
-    extraGroups = [ "networkmanager" "wheel" "plugdev" ];
-    packages = with pkgs; [
-      #  thunderbird
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "plugdev"
+      "audio"
+      "bluetooth"
     ];
   };
 
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    package = pkgs.bluez5-experimental; # Add this line
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+        Experimental = true;
+        MultiProfile = "multiple"; # This should be inside General
+        Class = "0x00240414";
+        FastConnectable = true;
+      };
+      Properties = {
+        "Media.CodecSelectors" = "sbc_xq aac ldac aptx aptx_hd";
+        "Media.SupportedCodecs" = "sbc_xq aac ldac aptx aptx_hd";
+      };
+
+      Policy = {
+        # Add this section
+        AutoEnable = true;
+      };
+    };
+  };
+
   programs.zsh.enable = true;
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -138,6 +173,10 @@
     lutris
     corectrl
     pavucontrol
+    bluez
+    bluez-tools
+    sbc
+    wireplumber
   ];
 
   programs.steam.enable = true;

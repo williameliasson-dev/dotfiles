@@ -19,7 +19,8 @@ $windows = rofi -show window
 
 # Some default env vars.
 env = XCURSOR_SIZE,24
-env = QT_QPA_PLATFORMTHEME,qt5ct # change to qt6ct if you have that
+env = XCURSOR_THEME,Adwaita
+env = NIXOS_OZONE_WL=1
 
 # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
 input {
@@ -60,11 +61,12 @@ decoration {
         size = 3
         passes = 1
     }
-
-    drop_shadow = yes
-    shadow_range = 4
-    shadow_render_power = 3
-    col.shadow = rgba(1a1a1aee)
+shadow {
+    enabled = yes
+    range = 4
+    render_power = 3
+    color = rgba(1a1a1aee)
+    }
 }
 
 animations {
@@ -173,4 +175,5 @@ bindm = $mainMod, mouse:273, resizewindow
 # Start on launch
 
 exec-once=waybar
+exec-once=hyprctl setcursor Adwaita 24
 "
