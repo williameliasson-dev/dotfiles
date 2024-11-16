@@ -33,6 +33,7 @@
       ledger-live-desktop
       firefox-bin
       adwaita-icon-theme
+      mongodb-compass
     ];
     stateVersion = "24.05";
   };
