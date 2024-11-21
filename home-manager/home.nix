@@ -34,6 +34,10 @@
       firefox-bin
       adwaita-icon-theme
       mongodb-compass
+      vscode
+      gnome-keyring
+      libsecret
+      libgnome-keyring
     ];
     stateVersion = "24.05";
   };
