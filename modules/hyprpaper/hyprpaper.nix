@@ -6,10 +6,10 @@
       splash = false;
       splash_offset = 2.0;
 
-      preload = [ "/home/william/Documents/wallpapers/bg.png" ];
+      preload = [ "./wallpaper.png" ];
 
       wallpaper = [
-        ", /home/william/Documents/wallpapers/bg.png"
+        ", ./wallpaper.png"
       ];
     };
   };

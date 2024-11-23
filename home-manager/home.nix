@@ -8,7 +8,7 @@
     ../modules/waybar.nix
     ../modules/rofi.nix
     ../modules/vim.nix
-    ../modules/hyprpaper.nix
+    ../modules/hyprpaper/hyprpaper.nix
     ../modules/fastfetch/fastfetch.nix
     ../modules/hyprland/hyperland.nix
     inputs.nixvim.homeManagerModules.nixvim
@@ -41,6 +41,14 @@
       libsecret
       libgnome-keyring
       steam
+      fastfetch
+      wl-clipboard
+      ripgrep
+      pavucontrol
+      bluez
+      bluez-tools
+      sbc
+      wireplumber
     ];
     stateVersion = "24.05";
   };

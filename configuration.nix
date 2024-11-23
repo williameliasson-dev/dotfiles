@@ -142,16 +142,5 @@
 
   programs.zsh.enable = true;
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [
-    fastfetch
-    wl-clipboard
-    ripgrep
-    corectrl
-    pavucontrol
-    bluez
-    bluez-tools
-    sbc
-    wireplumber
-  ];
   system.stateVersion = "24.05"; 
 }
