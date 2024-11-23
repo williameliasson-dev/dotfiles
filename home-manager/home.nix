@@ -40,6 +40,7 @@
       gnome-keyring
       libsecret
       libgnome-keyring
+      steam
     ];
     stateVersion = "24.05";
   };
