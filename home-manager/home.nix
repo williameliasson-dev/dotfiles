@@ -9,6 +9,8 @@
     ../modules/rofi.nix
     ../modules/vim.nix
     ../modules/hyprpaper.nix
+    ../modules/fastfetch/fastfetch.nix
+    ../modules/hyprland/hyperland.nix
     inputs.nixvim.homeManagerModules.nixvim
   ];
 
@@ -53,11 +55,6 @@
         push = { autoSetupRemote = true; };
       };
     };
-  };
-
-  wayland.windowManager.hyprland = {
-    enable = true;
-    extraConfig = import ../modules/hyprland.nix;
   };
 
   programs.gh.enable = true;
