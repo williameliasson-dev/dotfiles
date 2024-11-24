@@ -25,7 +25,7 @@
       nerdfonts
       devenv
       xwayland
-      discord
+      discord-ptb
       wl-clipboard
       kubectl
       sshfs
@@ -49,6 +49,7 @@
       bluez-tools
       sbc
       wireplumber
+      killall
     ];
     stateVersion = "24.05";
   };
