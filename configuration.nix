@@ -139,7 +139,7 @@
       };
     };
   };
-
+  systemd.services.lactd.enable = true;
   programs.steam.enable = true;
   programs.zsh.enable = true;
   nixpkgs.config.allowUnfree = true;

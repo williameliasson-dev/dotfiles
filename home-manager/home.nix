@@ -5,12 +5,12 @@
   imports = [
     ../modules/kitty.nix
     ../modules/zsh.nix
-    ../modules/waybar.nix
     ../modules/rofi.nix
     ../modules/vim.nix
     ../modules/hyprpaper/hyprpaper.nix
     ../modules/fastfetch/fastfetch.nix
     ../modules/hyprland/hyperland.nix
+    ../modules/waybar.nix
     inputs.nixvim.homeManagerModules.nixvim
   ];
 
@@ -50,12 +50,13 @@
       sbc
       wireplumber
       killall
+      lact
+      btop
     ];
     stateVersion = "24.05";
   };
 
   programs = {
-    btop.enable = true;
     home-manager.enable = true;
     git = {
       enable = true;

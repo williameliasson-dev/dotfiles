@@ -34,8 +34,8 @@
             "8" = "󰎹";
             "9" = "󰎼";
             "10" = "󰽽";
-            urgent = "";
-            default = "";
+            urgent = "󰀧";
+            default = "󱄅";
           };
         };
 
@@ -168,7 +168,6 @@
        #custom-power,
        #custom-logo {
          padding: 0 10px;
-         margin: 5px 0;
          color: #ebdbb2;
          background-color: #3c3836;
          border-radius: 10px;
