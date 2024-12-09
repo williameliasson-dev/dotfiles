@@ -54,6 +54,26 @@
     LC_TIME = "sv_SE.UTF-8";
   };
 
+  # Define the service to run as root
+  systemd.services.lactd = {
+    description = "AMDGPU Control Daemon";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "multi-user.target" ];
+
+    serviceConfig = {
+      ExecStart = "${pkgs.lact}/bin/lact daemon";
+      Type = "simple";
+      # Run as root since we need direct hardware access
+      User = "root";
+      Group = "root";
+      Restart = "on-failure";
+      RestartSec = "5";
+    };
+  };
+
+  # Install the package system-wide
+  environment.systemPackages = [ pkgs.lact ];
+
   services = {
     xserver = {
       xkb = {
@@ -62,11 +82,6 @@
       };
       enable = true;
     };
-
-    udev.packages = with pkgs; [
-      ledger-udev-rules
-      trezor-udev-rules
-    ];
 
     printing.enable = true;
 
@@ -113,6 +128,8 @@
       "plugdev"
       "audio"
       "bluetooth"
+      "video"
+      "render"
     ];
   };
 
@@ -139,7 +156,6 @@
       };
     };
   };
-  systemd.services.lactd.enable = true;
   programs.steam.enable = true;
   programs.zsh.enable = true;
   nixpkgs.config.allowUnfree = true;

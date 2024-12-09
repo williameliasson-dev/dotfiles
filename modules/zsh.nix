@@ -5,6 +5,7 @@ let
     ll = "ls -l";
     update = "sudo nixos-rebuild switch --flake /home/william/nixos#";
     nixflake = "cd /home/william/nixos && nvim flake.nix";
+    nas = "sudo sshfs -o allow_other,default_permissions,port=2022,uid=$(id -u),gid=$(id -g) william@192.168.0.110: ~/nas";
   };
 in
 {

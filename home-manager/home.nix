@@ -50,8 +50,8 @@
       sbc
       wireplumber
       killall
-      lact
       btop
+      lact
     ];
     stateVersion = "24.05";
   };
