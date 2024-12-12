@@ -52,6 +52,8 @@
       killall
       btop
       lact
+      morgen
+      calibre
     ];
     stateVersion = "24.05";
   };
