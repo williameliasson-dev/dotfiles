@@ -166,6 +166,20 @@
           enable = true;
         };
 
+        treesitter = {
+          enable = true;
+          settings = {
+            highlight.enable = true;
+            ensure_installed = [
+              "rust"
+              "markdown"
+              "markdown_inline"
+              "vim"
+              "nix"
+            ];
+          };
+        };
+
         none-ls = {
           enable = true;
           sources = {
@@ -238,6 +252,8 @@
                 procMacro = {
                   enable = true;
                 };
+                diagnostics.enabled = true;
+                inlayHints.enable = true;
                 checkOnSave = true;
                 command = "clippy";
               };
