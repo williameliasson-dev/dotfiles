@@ -81,6 +81,24 @@
         }
 
         # CMP
+
+        {
+          mode = "i";
+          key = "<C-Space>";
+          action.__raw = ''
+            function()
+              local cmp = require('cmp')
+              if not cmp.visible() then
+                return cmp.complete()
+              end
+            end
+          '';
+          options = {
+            silent = true;
+            desc = "Trigger suggestions";
+          };
+        }
+
         {
           mode = "i";
           key = "<C-y>";

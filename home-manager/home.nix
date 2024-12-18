@@ -53,7 +53,8 @@
       btop
       lact
       morgen
-      calibre
+      grim
+      slurp
     ];
     stateVersion = "24.05";
   };
