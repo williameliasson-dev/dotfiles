@@ -55,6 +55,7 @@
       morgen
       grim
       slurp
+      insomnia
     ];
     stateVersion = "24.05";
   };
