@@ -234,6 +234,20 @@
           enable = true;
         };
 
+        neoscroll = {
+          enable = true;
+          settings = {
+            mappings = [
+              "<C-u>"
+              "<C-d>"
+              "<C-b>"
+              "<C-f>"
+              "<C-y>"
+              "<C-e>"
+            ];
+          };
+        };
+
         presence-nvim = {
           enable = true;
         };
