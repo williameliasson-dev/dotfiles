@@ -23,12 +23,18 @@
         {
           key = "f";
           action.__raw = "function() require('hop').hint_char1({ direction = require('hop.hint').HintDirection.AFTER_CURSOR }) end";
-          options.remap = true;
+          options = {
+            remap = true;
+            desc = "Hop after cursor";
+          };
         }
         {
           key = "F";
           action.__raw = "function() require('hop').hint_char1({ direction = require('hop.hint').HintDirection.BEFORE_CURSOR }) end";
-          options.remap = true;
+          options = {
+            remap = true;
+            desc = "Hop after cursor";
+          };
         }
 
         #TELESCOPE
@@ -36,27 +42,37 @@
         {
           action = "<cmd>Telescope live_grep<CR>";
           key = "<leader>fw";
+          options = { desc = "Live Grep"; };
         }
         {
           action = "<cmd>Telescope find_files<CR>";
           key = "<leader>ff";
+          options = { desc = "Find files"; };
         }
         {
           action = "<cmd>Telescope git_commits<CR>";
           key = "<leader>fg";
+          options = { desc = "Browse git commits"; };
         }
         {
           action = "<cmd>Telescope oldfiles<CR>";
           key = "<leader>fh";
+          options = { desc = "Browse accessed files"; };
         }
         {
           action = "<cmd>Telescope colorscheme<CR>";
           key = "<leader>ch";
+          options = { desc = "Change colorscheme"; };
         }
 
         {
           action = "<cmd>Telescope man_pages<CR>";
           key = "<leader>fm";
+        }
+        {
+          action = "<cmd>Telescope lsp_definitions<CR>";
+          key = "gd";
+          options = { desc = "Jump to definition"; };
         }
         {
           mode = [ "i" "x" "n" "s" ];
