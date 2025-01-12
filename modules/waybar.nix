@@ -96,7 +96,7 @@
 
         "custom/power" = {
           format = "󰐥";
-          on-click = "hyprctl dispatch exit";
+          on-click = "systemctl suspend";
           tooltip = false;
         };
       };
