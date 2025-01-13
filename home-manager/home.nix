@@ -56,6 +56,7 @@
       grim
       slurp
       insomnia
+      rofi-power-menu
     ];
     stateVersion = "24.05";
   };
