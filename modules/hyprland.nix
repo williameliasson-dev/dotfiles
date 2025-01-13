@@ -127,6 +127,7 @@
   bind = $mainMod, P, pseudo, # dwindle
   bind = $mainMod, J, togglesplit, # dwindle
   bind = $mainMod, F, exec, fullscreen
+  bind = $mainMod, ', exec, rofi -show power-menu -modi power-menu:rofi-power-menu
 
   # Move focus with mainMod + vim binds
   bind = $mainMod, H, movefocus, l
