@@ -312,6 +312,18 @@
         telescope = {
           enable = true;
         };
+
+        lsp-lines = {
+          enable = true;
+        };
+
+        lualine = {
+          enable = true;
+        };
+
+        startify = {
+          enable = true;
+        };
       };
     };
   };
