@@ -200,20 +200,6 @@
           enable = true;
         };
 
-        treesitter = {
-          enable = true;
-          settings = {
-            highlight.enable = true;
-            ensure_installed = [
-              "rust"
-              "markdown"
-              "markdown_inline"
-              "vim"
-              "nix"
-            ];
-          };
-        };
-
         none-ls = {
           enable = true;
           sources = {

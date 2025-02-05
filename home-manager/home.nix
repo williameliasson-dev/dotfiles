@@ -11,6 +11,7 @@
     ../modules/fastfetch/fastfetch.nix
     ../modules/hyprland/hyperland.nix
     ../modules/waybar.nix
+    ../modules/dunst.nix
     inputs.nixvim.homeManagerModules.nixvim
   ];
 
@@ -22,7 +23,7 @@
       cmatrix
       gh
       yazi
-      nerdfonts
+      nerd-fonts.fira-code
       devenv
       xwayland
       discord-ptb
