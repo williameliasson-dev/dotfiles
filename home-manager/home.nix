@@ -24,6 +24,8 @@
       gh
       yazi
       nerd-fonts.fira-code
+      nerd-fonts.jetbrains-mono
+      lunar-client
       devenv
       xwayland
       discord-ptb
