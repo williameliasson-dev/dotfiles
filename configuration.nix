@@ -72,7 +72,22 @@
   };
 
   # Install the package system-wide
-  environment.systemPackages = [ pkgs.lact ];
+  environment = {
+    systemPackages = [ pkgs.lact ];
+    variables = {
+      # If cursor is not visible, try to set this to "on".
+      XDG_CURRENT_DESKTOP = "Hyprland";
+      XDG_SESSION_TYPE = "wayland";
+      XDG_SESSION_DESKTOP = "Hyprland";
+    };
+    sessionVariables = {
+      MOZ_ENABLE_WAYLAND = "1";
+      NIXOS_OZONE_WL = "1";
+      T_QPA_PLATFORM = "wayland";
+      GDK_BACKEND = "wayland";
+      WLR_NO_HARDWARE_CURSORS = "1";
+    };
+  };
 
   services = {
     xserver = {
@@ -133,6 +148,20 @@
     ];
   };
 
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+    config = {
+      common.default = [ "gtk" ];
+      hyprland.default = [ "gtk" "hyprland" ];
+    };
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-wlr
+      pkgs.xdg-desktop-portal-hyprland
+    ];
+  };
+
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
@@ -156,8 +185,12 @@
       };
     };
   };
-  programs.steam.enable = true;
-  programs.zsh.enable = true;
+
+  programs = {
+    steam.enable = true;
+    zsh.enable = true;
+  };
+
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "24.05";
 }
