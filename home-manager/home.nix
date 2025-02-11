@@ -28,7 +28,7 @@
       lunar-client
       devenv
       xwayland
-      discord-ptb
+      discord
       wl-clipboard
       kubectl
       sshfs
