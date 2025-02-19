@@ -30,8 +30,11 @@
     };
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+    timeout = 0;
+  };
 
   networking.hostName = "nixos"; # Define your hostname.
   networking.networkmanager.enable = true;
@@ -55,19 +58,23 @@
   };
 
   # Define the service to run as root
-  systemd.services.lactd = {
-    description = "AMDGPU Control Daemon";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "multi-user.target" ];
+  systemd.services = {
+    NetworkManager-wait-online.enable = false;
 
-    serviceConfig = {
-      ExecStart = "${pkgs.lact}/bin/lact daemon";
-      Type = "simple";
-      # Run as root since we need direct hardware access
-      User = "root";
-      Group = "root";
-      Restart = "on-failure";
-      RestartSec = "5";
+    lactd = {
+      description = "AMDGPU Control Daemon";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "multi-user.target" ];
+
+      serviceConfig = {
+        ExecStart = "${pkgs.lact}/bin/lact daemon";
+        Type = "simple";
+        # Run as root since we need direct hardware access
+        User = "root";
+        Group = "root";
+        Restart = "on-failure";
+        RestartSec = "5";
+      };
     };
   };
 

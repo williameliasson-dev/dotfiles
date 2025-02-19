@@ -37,6 +37,7 @@
       docker-compose
       ledger-live-desktop
       firefox-bin
+      ungoogled-chromium
       adwaita-icon-theme
       mongodb-compass
       vscode
@@ -60,6 +61,7 @@
       slurp
       insomnia
       rofi-power-menu
+      obsidian
     ];
     stateVersion = "24.05";
   };
