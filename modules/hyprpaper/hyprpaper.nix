@@ -6,10 +6,10 @@
       splash = false;
       splash_offset = 2.0;
 
-      preload = [ "./animeppr.jpg" ];
+      preload = [ "/home/william/nixos/modules/hyprpaper/animeppr.jpg" ];
 
       wallpaper = [
-        ", ./animeppr.jpg"
+        "DP-3, /home/william/nixos/modules/hyprpaper/animeppr.jpg"
       ];
     };
   };
