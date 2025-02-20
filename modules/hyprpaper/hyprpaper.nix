@@ -6,10 +6,10 @@
       splash = false;
       splash_offset = 2.0;
 
-      preload = [ "./wallpaper.png" ];
+      preload = [ "./animeppr.jpg" ];
 
       wallpaper = [
-        ", ./wallpaper.png"
+        ", ./animeppr.jpg"
       ];
     };
   };

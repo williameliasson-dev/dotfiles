@@ -7,8 +7,8 @@
         position = "top";
         height = 40;
         margin-top = 5;
-        margin-left = 5;
-        margin-right = 5;
+        margin-left = 20;
+        margin-right = 20;
         spacing = 5;
         modules-left = [ "custom/logo" "hyprland/workspaces" ];
         modules-center = [ "clock" ];
@@ -126,13 +126,14 @@
        }
 
       #workspaces button {
-      padding: 0 10px;
       background-color: transparent;
       color: #ebdbb2;
       border-radius: 10px;
       font-size: 18px;
       min-width: 40px;
       min-height: 40px;
+      padding: 0 10px;
+      margin: 5px;
       }
 
         #workspaces button label {
@@ -171,6 +172,8 @@
          color: #ebdbb2;
          background-color: #3c3836;
          border-radius: 10px;
+         padding: 0 10px;
+         margin: 5px;
        }
 
        #custom-logo {
@@ -179,8 +182,8 @@
        }
 
        #clock {
-         background-color: #689d6a;
-         color: #282828;
+         color: #689d6a;
+         background-color: transparent;
          font-weight: bold;
        }
 
