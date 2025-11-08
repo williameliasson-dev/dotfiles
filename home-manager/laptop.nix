@@ -16,7 +16,6 @@
     ../modules/shared/dunst.nix
     ../modules/shared/git.nix
     ../modules/shared/hyprlock.nix
-    ../modules/shared/node.nix
     inputs.nixvim.homeModules.nixvim
   ];
 
@@ -31,7 +30,6 @@
       exercism
       gnumake
       openssl
-      wireguard-tools
       gh
       slurp
       grim
