@@ -539,22 +539,38 @@
           enable = true;
           servers = {
             ts_ls = {
-              enable = true; # You already have this
+              enable = true;
+              extraOptions = {
+                init_options = {
+                  preferences = {
+                    includeCompletionsForModuleExports = true;
+                    includeCompletionsWithInsertText = true;
+                    includeCompletionsWithSnippetText = true;
+                  };
+                };
+              };
               settings = {
+                implicitProjectConfiguration = {
+                  checkJs = true;
+                  target = "ES2022";
+                };
                 javascript = {
                   suggest = {
                     completeFunctionCalls = true;
                     includeCompletionsWithSnippetText = true;
+                    includeCompletionsForModuleExports = true;
+                    includeCompletionsWithInsertText = true;
                   };
                   format = {
                     enable = true;
                   };
                 };
                 typescript = {
-                  # Same settings as JavaScript
                   suggest = {
                     completeFunctionCalls = true;
                     includeCompletionsWithSnippetText = true;
+                    includeCompletionsForModuleExports = true;
+                    includeCompletionsWithInsertText = true;
                   };
                   format = {
                     enable = true;

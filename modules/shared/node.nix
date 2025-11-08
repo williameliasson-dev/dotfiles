@@ -5,7 +5,9 @@
 
     # Node packages
     nodePackages.typescript
+    nodePackages.typescript-language-server
     nodePackages.eslint
     nodePackages.prettier
+    nodePackages."@types/node"
   ];
 }
