@@ -4,6 +4,8 @@
   ...
 }:
 {
+  nixpkgs.config.allowUnfree = true;
+
   imports = [
     ../modules/shared/kitty.nix
     ../modules/shared/zsh.nix
@@ -23,42 +25,68 @@
     username = "william";
     homeDirectory = "/home/william";
     packages = with pkgs; [
+      # Development tools
       lazygit
+      gcc
+      gnumake
+      gh
+      devenv
+      kubectl
+      ripgrep
+
+      # File management & compression
       zip
       unzip
+      yazi
+      sshfs
+
+      # Database & backend
       mariadb
+      dbeaver-bin
+
+      # Exercise & learning
       exercism
-      gnumake
-      openssl
-      gh
+
+      # Wayland/Hyprland utilities
       slurp
       grim
       wl-clipboard
       brightnessctl
       playerctl
-      gcc
-      yazi
+      rofi-power-menu
+
+      # System utilities
+      openssl
+      killall
+      btop
+      fastfetch
+
+      # Fonts
       nerd-fonts.fira-code
       nerd-fonts.iosevka
       nerd-fonts.jetbrains-mono
-      devenv
-      kubectl
-      sshfs
+      noto-fonts-color-emoji
+
+      # Desktop & theming
       adwaita-icon-theme
       gnome-keyring
       libsecret
       libgnome-keyring
-      fastfetch
-      ripgrep
+
+      # Audio
       sbc
-      killall
-      btop
-      insomnia
-      rofi-power-menu
-      dbeaver-bin
-      calcure
+
+      # Virtualization
       gnome-boxes
+
+      # API & development
+      insomnia
       vscode-js-debug
+
+      # Calendar & organization
+      calcure
+
+      # Editor
       claude-code
     ];
     stateVersion = "24.05";
@@ -69,4 +97,14 @@
   };
 
   programs.gh.enable = true;
+
+  xdg.desktopEntries.zendr = {
+    name = "Zendr";
+    genericName = "Development Environment";
+    comment = "Launch Zendr development services";
+    exec = "${pkgs.bash}/bin/bash /home/william/dotfiles/scripts/zendr-launch.sh";
+    icon = "utilities-terminal";
+    terminal = false;
+    categories = [ "Development" "Utility" ];
+  };
 }

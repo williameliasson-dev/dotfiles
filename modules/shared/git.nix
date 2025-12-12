@@ -1,8 +1,16 @@
 {
   programs.git = {
     enable = true;
-    userName = "williameliasson-dev";
-    userEmail = "williameliasson5@gmail.com";
+    settings = {
+      user = {
+        name = "williameliasson-dev";
+        email = "williameliasson5@gmail.com";
+      };
+      push = {
+        autoSetupRemote = true;
+      };
+    };
+
     ignores = [
       ".devenv*"
       "devenv.local.nix"
@@ -16,8 +24,5 @@
       ".local" # Added
       ".nodejs" # Added
     ];
-    extraConfig = {
-      push = { autoSetupRemote = true; };
-    };
   };
 }

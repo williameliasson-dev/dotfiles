@@ -19,14 +19,15 @@
     alias ll="ls -l"
     alias update="home-manager switch --flake ~/.config/home-manager#william@laptop"
     alias nixflake="cd ~/.config/home-manager && nvim flake.nix"
-    alias nas="sudo sshfs -o IdentityFile=~/.ssh/homelab/id_ed25519 sftp@homelab.local:/mnt/storage ~/nas"
-    alias nas-umount="umount ~/nas"
-    alias rel-notes="git --no-pager show --pretty=format:%s -s tags/\$(git describe --tags --abbrev=0)..HEAD"
+    alias zendr-notes-portal="git --no-pager show --pretty=format:%s -s tags/\$(git describe --tags --abbrev=0)..HEAD"
+    alias zendr-notes-ss="git --no-pager log --pretty=format:'%s' --first-parent \$(git describe --tags --abbrev=0)..main"
+    alias zendr-launch="~/dotfiles/scripts/zendr-launch.sh"
 
     fastfetch
 
     export PATH=$HOME/.local/bin:$PATH
     export EDITOR='nvim'
+    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent"
 
     #NVM
 

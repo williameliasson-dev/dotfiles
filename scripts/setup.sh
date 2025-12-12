@@ -32,10 +32,12 @@ sudo pacman -Syu --needed --noconfirm \
 	alsa-utils \
 	base \
 	base-devel \
+	blueman \
 	bluez \
 	bluez-utils \
 	btrfs-progs \
 	curl \
+	discord \
 	docker \
 	docker-compose \
 	efibootmgr \
@@ -45,6 +47,7 @@ sudo pacman -Syu --needed --noconfirm \
 	hyprland \
 	hyprlock \
 	hyprpaper \
+	imagemagick \
 	intel-gpu-tools \
 	intel-media-driver \
 	intel-ucode \
@@ -52,11 +55,13 @@ sudo pacman -Syu --needed --noconfirm \
 	kitty \
 	lib32-mesa \
 	lib32-vulkan-intel \
+	libreoffice-fresh \
 	libva-intel-driver \
 	linux \
 	linux-firmware \
 	mesa \
 	networkmanager \
+	nfs-utils \
 	noto-fonts-emoji \
 	openssh \
 	pavucontrol \
@@ -65,22 +70,53 @@ sudo pacman -Syu --needed --noconfirm \
 	pipewire-jack \
 	pipewire-pulse \
 	polkit-gnome \
-	powertop \
+	python-gitpython \
+	python-pillow \
+	python-pip \
+	python-textual-image \
 	seatd \
 	sof-firmware \
+	systemd-resolvconf \
+	task \
+	tlp \
+	ttf-dejavu \
 	ttf-firacode-nerd \
 	vim \
 	vulkan-intel \
 	wayland-protocols \
+	wget \
+	wireguard-tools \
 	wireplumber \
 	xdg-desktop-portal \
 	xdg-desktop-portal-gtk \
 	xdg-desktop-portal-hyprland \
+	yazi \
 	zram-generator \
 	zsh \
 	zsh-autosuggestions \
 	zsh-history-substring-search \
 	zsh-syntax-highlighting
+
+echo -e "${GREEN}Installing AUR packages (requires yay)...${NC}"
+# Install yay if not present
+if ! command -v yay &>/dev/null; then
+	echo -e "${YELLOW}Installing yay AUR helper...${NC}"
+	cd /tmp
+	git clone https://aur.archlinux.org/yay.git
+	cd yay
+	makepkg -si --noconfirm
+	cd -
+fi
+
+# Install AUR packages
+yay -S --needed --noconfirm \
+	jiratui-git \
+	nordlayer \
+	postman-bin \
+	slack-desktop \
+	spotify-launcher \
+	ungoogled-chromium-bin \
+	visual-studio-code-bin
 
 echo -e "${GREEN}[3/8] Installing Nix...${NC}"
 if ! command -v nix &>/dev/null; then
