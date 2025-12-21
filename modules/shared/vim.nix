@@ -371,6 +371,10 @@
       ];
 
       plugins = {
+        comment = {
+          enable = true;
+        };
+
         gitblame = {
           enable = true;
           settings = {
