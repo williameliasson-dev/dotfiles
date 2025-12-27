@@ -54,6 +54,7 @@
       brightnessctl
       playerctl
       rofi-power-menu
+      wlsunset
 
       # System utilities
       openssl
