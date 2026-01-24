@@ -1,5 +1,5 @@
 {
-  description = "NixOS configuration with integrated Home Manager";
+  description = "Nix configuration with Home Manager";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/";
     home-manager = {
@@ -22,34 +22,26 @@
       system = "x86_64-linux";
     in
     {
-      nixosConfigurations = {
-        desktop = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./system/desktop-configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit inputs outputs; };
-              home-manager.users.william = import ./home-manager/desktop.nix;
-              nixpkgs.config.allowUnfree = true;
-            }
-          ];
-        };
-      };
-
       # Add standalone Home Manager configurations
       homeConfigurations = {
-        "william@laptop" = home-manager.lib.homeManagerConfiguration {
+        "william@arch" = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };
 
           extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home-manager/laptop.nix ];
+          modules = [ ./home-manager/arch.nix ];
+        };
+
+        "william@ios" = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
+
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [ ./home-manager/ios.nix ];
         };
       };
     };

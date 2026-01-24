@@ -7,10 +7,17 @@
 {
   home.file.".config/hypr/hyprland.conf".text = ''
     # Monitors - external on top, laptop on bottom, with explicit resolutions and highest refresh rates
+    # Samsung 5K monitor with 2x scaling for readability
+    monitor=DP-1,5120x2880@60,0x0,2
+    # AOC ultrawide (USB-C connected)
+    monitor=DP-1,3440x1440@100,0x0,1
+    # Fallback configs for other external monitors
     monitor=DP-3,3440x1440@100,0x0,1
     monitor=DP-5,3440x1440@60,0x0,1
-    monitor=HDMI-A-1,3440x1440@100,0x0,1
-    monitor=eDP-1,1920x1200@60,760x1440,1
+    monitor=HDMI-A-1,preferred,0x0,1,vrr,1
+    # Laptop display
+    monitor=eDP-1,1920x1200@60,760x1440,1,vrr,1
+    # Default for any other monitor
     monitor=,preferred,auto,1
 
     # Programs
@@ -49,28 +56,28 @@
     decoration {
         rounding = 0
         blur {
-            enabled = true
+            enabled = false
             size = 3
             passes = 1
         }
         shadow {
-            enabled = true
+            enabled = false
             range = 4
             render_power = 3
             color = rgba(1a1a1aee)
         }
     }
 
-    # Animations
+    # Animations - optimized for performance
     animations {
         enabled = true
         bezier = myBezier, 0.05, 0.9, 0.1, 1.05
-        animation = windows, 1, 7, myBezier
-        animation = windowsOut, 1, 7, default, popin 80%
-        animation = border, 1, 10, default
-        animation = borderangle, 1, 8, default
-        animation = fade, 1, 7, default
-        animation = workspaces, 1, 6, default
+        animation = windows, 1, 3, myBezier
+        animation = windowsOut, 1, 3, default, popin 80%
+        animation = border, 1, 5, default
+        animation = borderangle, 1, 4, default
+        animation = fade, 1, 3, default
+        animation = workspaces, 1, 3, default
     }
 
     # Dwindle layout
