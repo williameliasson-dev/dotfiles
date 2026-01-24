@@ -370,9 +370,52 @@
         }
       ];
 
+      extraConfigLua = ''
+        -- Wilder configuration for nice popup menus
+        local wilder = require('wilder')
+
+        wilder.set_option('renderer', wilder.popupmenu_renderer(
+          wilder.popupmenu_border_theme({
+            highlights = {
+              border = 'Normal',
+              accent = wilder.make_hl('WilderAccent', 'Pmenu', {{a = 1}, {a = 1}, {foreground = '#f4468f'}}),
+            },
+            border = 'rounded',
+            max_height = '30%',
+            min_height = 0,
+            prompt_position = 'top',
+            reverse = 0,
+            left = {' ', wilder.popupmenu_devicons()},
+            right = {' ', wilder.popupmenu_scrollbar()},
+          })
+        ))
+
+        -- Enable fuzzy matching with vim's built-in fuzzy filter
+        wilder.set_option('pipeline', {
+          wilder.branch(
+            wilder.cmdline_pipeline({
+              fuzzy = 1,
+              fuzzy_filter = wilder.vim_fuzzy_filter(),
+            }),
+            wilder.vim_search_pipeline({
+              fuzzy = 1,
+            })
+          ),
+        })
+      '';
+
       plugins = {
         comment = {
           enable = true;
+        };
+
+        wilder = {
+          enable = true;
+          settings.modes = [
+            ":"
+            "/"
+            "?"
+          ];
         };
 
         gitblame = {
