@@ -34,14 +34,14 @@
           modules = [ ./home-manager/arch.nix ];
         };
 
-        "william@ios" = home-manager.lib.homeManagerConfiguration {
+        "william@macos" = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };
 
           extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home-manager/ios.nix ];
+          modules = [ ./home-manager/macos.nix ];
         };
       };
     };

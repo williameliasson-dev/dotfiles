@@ -98,14 +98,4 @@
   };
 
   programs.gh.enable = true;
-
-  xdg.desktopEntries.zendr = {
-    name = "Zendr";
-    genericName = "Development Environment";
-    comment = "Launch Zendr development services";
-    exec = "${pkgs.bash}/bin/bash /home/william/dotfiles/scripts/zendr-launch.sh";
-    icon = "utilities-terminal";
-    terminal = false;
-    categories = [ "Development" "Utility" ];
-  };
 }

@@ -19,9 +19,6 @@
     alias ll="ls -l"
     alias update="home-manager switch --flake ~/.config/home-manager#william@laptop"
     alias nixflake="cd ~/.config/home-manager && nvim flake.nix"
-    alias zendr-notes-portal="git --no-pager show --pretty=format:%s -s tags/\$(git describe --tags --abbrev=0)..HEAD"
-    alias zendr-notes-ss="git --no-pager log --pretty=format:'%s' --first-parent \$(git describe --tags --abbrev=0)..main"
-    alias zendr-launch="~/dotfiles/scripts/zendr-launch.sh"
 
     fastfetch
 
