@@ -1,0 +1,16 @@
+ configuration {
+    show-icons: true;
+    font: "FiraCode Nerd Font Mono";
+    icon-theme: "Papirus-Dark";
+
+    display-ssh:    "󰣀 ssh:";
+    display-run:    "󱓞 run:";
+    display-drun:   "󰣖 drun:";
+    display-window: "󱂬 window:";
+    display-combi:  "󰕘 combi:";
+    display-filebrowser: "󰉋 filebrowser:";
+
+    dpi: 144;
+}
+
+@theme "gruvbox-material"
