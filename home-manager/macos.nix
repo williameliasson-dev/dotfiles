@@ -17,7 +17,7 @@
 
   home = {
     username = "william";
-    homeDirectory = "/home/william";
+    homeDirectory = "/Users/william";
     packages = with pkgs; [
       # Development tools
       lazygit
@@ -27,6 +27,7 @@
       devenv
       kubectl
       ripgrep
+      claude-code
 
       # File management & compression
       zip
@@ -36,7 +37,6 @@
 
       # Database & backend
       mariadb
-      dbeaver-bin
 
       # Exercise & learning
       exercism
@@ -56,8 +56,6 @@
       # API & development
       vscode-js-debug
 
-      # Editor
-      claude-code
     ];
     stateVersion = "24.05";
   };
