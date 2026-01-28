@@ -6,6 +6,7 @@
 }:
 {
   home.file.".zshrc".text = ''
+    export OMP_THEME_DIR="${pkgs.oh-my-posh}/share/oh-my-posh/themes"
     ${builtins.readFile ./zshrc}
 
     # Load zsh plugins
@@ -15,6 +16,7 @@
   '';
 
   home.packages = with pkgs; [
+    oh-my-posh
     zsh-autosuggestions
     zsh-syntax-highlighting
     zsh-history-substring-search
