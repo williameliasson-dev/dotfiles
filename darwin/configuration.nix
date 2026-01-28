@@ -26,29 +26,25 @@
       upgrade = true;
     };
 
-    # Homebrew taps
-    taps = [
-      "homebrew/bundle"
-    ];
-
     # Homebrew formulae (CLI tools)
     brews = [
-     nvm
+      "nvm"
     ];
 
     # Homebrew casks (GUI applications)
     casks = [
-      spotify
-      slack
-      ungoogled-chromium
-      obsidian
-      zed
-      postman
+      "spotify"
+      "slack"
+      "ungoogled-chromium"
+      "obsidian"
+      "zed"
+      "postman"
+      "kitty"
     ];
 
-    # Mac App Store apps (requires `mas` CLI)
+    # Mac    App Store apps (requires `mas` CLI)
     masApps = {
-      # Add Mac App Store apps here, e.g.:
+      # Add  Mac App Store apps here, e.g.:
       # "Xcode" = 497799835;
     };
   };
@@ -75,7 +71,7 @@
   };
 
   # Enable Touch ID for sudo
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   # Create /etc/zshrc that loads the nix-darwin environment
   programs.zsh.enable = true;
@@ -85,6 +81,13 @@
 
   # Used for backwards compatibility
   system.stateVersion = 5;
+
+  # Define the primary user
+  system.primaryUser = "william";
+  users.users.william = {
+    name = "william";
+    home = "/Users/william";
+  };
 
   # The platform the configuration will be used on
   nixpkgs.hostPlatform = "aarch64-darwin";

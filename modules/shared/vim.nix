@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 {
   programs.nixvim = {
     config = {
@@ -634,7 +637,6 @@
             dockerls.enable = true; # Docker
             bashls.enable = true; # Bash
             clangd.enable = true; # C/C++
-            csharp_ls.enable = true; # C#
             yamlls.enable = true; # YAML
 
             lua_ls = {

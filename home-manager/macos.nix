@@ -4,15 +4,12 @@
   ...
 }:
 {
-  nixpkgs.config.allowUnfree = true;
-
   imports = [
     ../modules/shared/kitty/kitty.nix
     ../modules/shared/zsh/zsh.nix
     ../modules/shared/vim.nix
     ../modules/shared/fastfetch/fastfetch.nix
     ../modules/shared/git.nix
-    inputs.nixvim.homeModules.nixvim
   ];
 
   home = {

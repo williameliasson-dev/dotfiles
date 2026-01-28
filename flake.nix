@@ -52,6 +52,9 @@
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = { inherit inputs outputs; };
               home-manager.users.william = import ./home-manager/macos.nix;
+              home-manager.sharedModules = [
+                inputs.nixvim.homeModules.nixvim
+              ];
             }
           ];
         };
