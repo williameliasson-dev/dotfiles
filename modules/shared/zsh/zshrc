@@ -5,6 +5,7 @@ alias vim="nvim"
 alias ll="ls -l"
 alias update="home-manager switch --flake ~/.config/home-manager#william@laptop"
 alias nixflake="cd ~/.config/home-manager && nvim flake.nix"
+alias ..="cd .."
 
 fastfetch
 
