@@ -274,6 +274,13 @@
           };
         }
         {
+          action = "<cmd>Telescope lsp_references<CR>";
+          key = "gr";
+          options = {
+            desc = "Go to references";
+          };
+        }
+        {
           mode = [
             "i"
             "x"
