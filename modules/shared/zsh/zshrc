@@ -1,3 +1,12 @@
+# History settings
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt SHARE_HISTORY
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+
 eval "$(oh-my-posh init zsh --config $OMP_THEME_DIR/gruvbox.omp.json)"
 
 # Aliases
