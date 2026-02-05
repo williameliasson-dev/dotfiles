@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 {
   programs.nixvim = {
     config = {
@@ -206,6 +203,22 @@
           key = "<leader>gA";
           options = {
             desc = "Git add all files";
+          };
+        }
+        {
+          key = "<leader>gp";
+          action.__raw = ''
+            function()
+              local commit = vim.fn.system("git blame -l -L " .. vim.fn.line(".") .. "," .. vim.fn.line(".") .. " -- " .. vim.fn.expand("%") .. " | awk '{print $1}'"):gsub("%s+", "")
+              if commit and commit ~= "" and not commit:match("^0+$") then
+                vim.fn.system("gh pr list --search " .. commit .. " --state merged --json url --jq '.[0].url' | xargs xdg-open")
+              else
+                vim.notify("No commit found for this line", vim.log.levels.WARN)
+              end
+            end
+          '';
+          options = {
+            desc = "Open PR for current line";
           };
         }
 
