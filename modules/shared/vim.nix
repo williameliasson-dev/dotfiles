@@ -126,6 +126,41 @@
           };
         }
 
+        # CodeCompanion
+        {
+          mode = [
+            "n"
+            "v"
+          ];
+          key = "<leader>ai";
+          action = "<cmd>CodeCompanion<cr>";
+          options = {
+            desc = "Inline prompt";
+          };
+        }
+        {
+          mode = [
+            "n"
+            "v"
+          ];
+          key = "<leader>ac";
+          action = "<cmd>CodeCompanionChat<cr>";
+          options = {
+            desc = "Open chat";
+          };
+        }
+        {
+          mode = [
+            "n"
+            "v"
+          ];
+          key = "<leader>aa";
+          action = "<cmd>CodeCompanionActions<cr>";
+          options = {
+            desc = "Action palette";
+          };
+        }
+
         #TELESCOPE
 
         {
