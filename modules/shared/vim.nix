@@ -136,19 +136,28 @@
 
         # Opencode
         {
-          mode = [ "n" "v" ];
+          mode = [
+            "n"
+            "v"
+          ];
           key = "<leader>aa";
           action.__raw = "function() require('opencode').ask('@this: ', { submit = true }) end";
           options.desc = "Ask opencode";
         }
         {
-          mode = [ "n" "v" ];
+          mode = [
+            "n"
+            "v"
+          ];
           key = "<leader>ac";
           action.__raw = "function() require('opencode').toggle() end";
           options.desc = "Toggle opencode";
         }
         {
-          mode = [ "n" "v" ];
+          mode = [
+            "n"
+            "v"
+          ];
           key = "<leader>as";
           action.__raw = "function() require('opencode').select() end";
           options.desc = "Opencode select";
@@ -328,7 +337,7 @@
             "n"
             "s"
           ];
-          key = "<C-s>";
+          key = "<leader>w";
           action = "<cmd>w<cr><esc>";
           options = {
             desc = "Save File";
