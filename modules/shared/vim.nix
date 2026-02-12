@@ -126,39 +126,32 @@
           };
         }
 
-        # CodeCompanion
+        # Terminal
         {
-          mode = [
-            "n"
-            "v"
-          ];
-          key = "<leader>ai";
-          action = "<cmd>CodeCompanion<cr>";
-          options = {
-            desc = "Inline prompt";
-          };
+          mode = [ "t" ];
+          key = "<Esc><Esc>";
+          action = "<C-\\><C-n>";
+          options.desc = "Exit terminal mode";
         }
+
+        # Opencode
         {
-          mode = [
-            "n"
-            "v"
-          ];
-          key = "<leader>ac";
-          action = "<cmd>CodeCompanionChat<cr>";
-          options = {
-            desc = "Open chat";
-          };
-        }
-        {
-          mode = [
-            "n"
-            "v"
-          ];
+          mode = [ "n" "v" ];
           key = "<leader>aa";
-          action = "<cmd>CodeCompanionActions<cr>";
-          options = {
-            desc = "Action palette";
-          };
+          action.__raw = "function() require('opencode').ask('@this: ', { submit = true }) end";
+          options.desc = "Ask opencode";
+        }
+        {
+          mode = [ "n" "v" ];
+          key = "<leader>ac";
+          action.__raw = "function() require('opencode').toggle() end";
+          options.desc = "Toggle opencode";
+        }
+        {
+          mode = [ "n" "v" ];
+          key = "<leader>as";
+          action.__raw = "function() require('opencode').select() end";
+          options.desc = "Opencode select";
         }
 
         #TELESCOPE
@@ -811,23 +804,8 @@
           enable = true;
         };
 
-        codecompanion = {
+        opencode = {
           enable = true;
-          settings = {
-            adapters = {
-              acp = {
-                claude_code.__raw = ''
-                  function()
-                    return require("codecompanion.adapters").extend("claude_code", {
-                      env = {
-                        CLAUDE_CODE_OAUTH_TOKEN = os.getenv("CLAUDE_CODE_OAUTH_TOKEN"),
-                      },
-                    })
-                  end
-                '';
-              };
-            };
-          };
         };
       };
     };

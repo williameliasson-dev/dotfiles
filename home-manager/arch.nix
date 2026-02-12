@@ -4,8 +4,6 @@
   ...
 }:
 {
-  nixpkgs.config.allowUnfree = true;
-
   imports = [
     ../modules/shared/kitty/kitty.nix
     ../modules/shared/zsh/zsh.nix
@@ -36,6 +34,7 @@
       claude-code
       insomnia
       vscode-js-debug
+      opencode
 
       # File management & compression
       zip

@@ -8,6 +8,7 @@
     };
     nixvim = {
       url = "github:nix-community/nixvim/";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-darwin = {
       url = "github:LnL7/nix-darwin/";
