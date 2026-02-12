@@ -33,6 +33,9 @@
       devenv
       kubectl
       ripgrep
+      claude-code
+      insomnia
+      vscode-js-debug
 
       # File management & compression
       zip
@@ -57,10 +60,10 @@
       wlsunset
 
       # System utilities
-      openssl
       killall
       btop
       fastfetch
+      openssl
 
       # Fonts
       nerd-fonts.fira-code
@@ -76,19 +79,6 @@
 
       # Audio
       sbc
-
-      # Virtualization
-      gnome-boxes
-
-      # API & development
-      insomnia
-      vscode-js-debug
-
-      # Calendar & organization
-      calcure
-
-      # Editor
-      claude-code
     ];
     stateVersion = "24.05";
   };
