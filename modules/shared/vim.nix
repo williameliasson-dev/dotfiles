@@ -331,12 +331,6 @@
           };
         }
         {
-          mode = [
-            "i"
-            "x"
-            "n"
-            "s"
-          ];
           key = "<leader>w";
           action = "<cmd>w<cr><esc>";
           options = {
