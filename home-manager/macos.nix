@@ -25,6 +25,7 @@
       kubectl
       ripgrep
       claude-code
+      opencode
 
       # File management & compression
       zip
@@ -52,7 +53,6 @@
 
       # API & development
       vscode-js-debug
-
     ];
     stateVersion = "24.05";
   };
@@ -61,5 +61,4 @@
     home-manager.enable = true;
     gh.enable = true;
   };
-
 }
