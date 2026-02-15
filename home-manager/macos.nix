@@ -10,6 +10,7 @@
     ../modules/shared/vim.nix
     ../modules/shared/fastfetch/fastfetch.nix
     ../modules/shared/git.nix
+    ../modules/macos/aerospace.nix
   ];
 
   home = {
