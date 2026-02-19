@@ -243,6 +243,13 @@
           };
         }
         {
+          action = "<cmd>Git push<CR>";
+          key = "<leader>gP";
+          options = {
+            desc = "Git push";
+          };
+        }
+        {
           key = "<leader>gp";
           action.__raw = ''
             function()
