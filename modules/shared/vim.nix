@@ -243,10 +243,63 @@
           };
         }
         {
-          action = "<cmd>Git push<CR>";
           key = "<leader>gP";
+          action.__raw = ''
+            function()
+              local buf = vim.api.nvim_create_buf(false, true)
+              local lines = {
+                "",
+                "   Git Push Confirmation  ",
+                "",
+                "  Push to remote? (y/n)  ",
+                "",
+              }
+              vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+
+              local width = 26
+              local height = #lines
+              local win = vim.api.nvim_open_win(buf, true, {
+                relative = "editor",
+                width = width,
+                height = height,
+                row = math.floor((vim.o.lines - height) / 2),
+                col = math.floor((vim.o.columns - width) / 2),
+                style = "minimal",
+                border = "rounded",
+                title = " Git Push ",
+                title_pos = "center",
+              })
+
+              vim.api.nvim_set_option_value("winhl", "Normal:DiagnosticFloatingInfo,FloatBorder:DiagnosticFloatingInfo", { win = win })
+
+              local function close()
+                vim.api.nvim_win_close(win, true)
+                vim.api.nvim_buf_delete(buf, { force = true })
+              end
+
+              vim.keymap.set("n", "y", function()
+                close()
+                vim.cmd("Git push")
+              end, { buffer = buf, nowait = true })
+
+              vim.keymap.set("n", "n", function()
+                close()
+                vim.notify("Git push cancelled", vim.log.levels.INFO)
+              end, { buffer = buf, nowait = true })
+
+              vim.keymap.set("n", "<Esc>", function()
+                close()
+                vim.notify("Git push cancelled", vim.log.levels.INFO)
+              end, { buffer = buf, nowait = true })
+
+              vim.keymap.set("n", "q", function()
+                close()
+                vim.notify("Git push cancelled", vim.log.levels.INFO)
+              end, { buffer = buf, nowait = true })
+            end
+          '';
           options = {
-            desc = "Git push";
+            desc = "Git push (with confirmation)";
           };
         }
         {
