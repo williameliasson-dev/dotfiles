@@ -259,6 +259,36 @@
           };
         }
 
+        # DIFFVIEW
+        {
+          action = "<cmd>DiffviewOpen<CR>";
+          key = "<leader>gv";
+          options = {
+            desc = "Diffview open";
+          };
+        }
+        {
+          action = "<cmd>DiffviewFileHistory %<CR>";
+          key = "<leader>gh";
+          options = {
+            desc = "Diffview file history";
+          };
+        }
+        {
+          action = "<cmd>DiffviewFileHistory<CR>";
+          key = "<leader>gH";
+          options = {
+            desc = "Diffview repo history";
+          };
+        }
+        {
+          action = "<cmd>DiffviewClose<CR>";
+          key = "<leader>gx";
+          options = {
+            desc = "Diffview close";
+          };
+        }
+
         # DAP (Debug Adapter Protocol)
         {
           action.__raw = "function() require('dap').continue() end";
@@ -734,6 +764,10 @@
         };
 
         fugitive = {
+          enable = true;
+        };
+
+        diffview = {
           enable = true;
         };
 
