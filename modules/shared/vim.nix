@@ -208,35 +208,35 @@
 
         # FUGITIVE
         {
-          action = "<cmd>Git<CR>";
+          action = "<cmd>silent Git<CR>";
           key = "<leader>gs";
           options = {
             desc = "Git status";
           };
         }
         {
-          action = "<cmd>Gvdiffsplit @{upstream}<CR>";
+          action = "<cmd>silent Gvdiffsplit @{upstream}<CR>";
           key = "<leader>gd";
           options = {
             desc = "Git vertical diff split against remote";
           };
         }
         {
-          action = "<cmd>Git commit<CR>";
+          action = "<cmd>silent Git commit<CR>";
           key = "<leader>gc";
           options = {
             desc = "Git commit";
           };
         }
         {
-          action = "<cmd>Git add %<CR>";
+          action = "<cmd>silent Git add %<CR>";
           key = "<leader>ga";
           options = {
             desc = "Git add current file";
           };
         }
         {
-          action = "<cmd>Git add .<CR>";
+          action = "<cmd>silent Git add .<CR>";
           key = "<leader>gA";
           options = {
             desc = "Git add all files";
@@ -277,9 +277,9 @@
                 vim.api.nvim_buf_delete(buf, { force = true })
               end
 
-              vim.keymap.set("n", "y", function()
+                vim.keymap.set("n", "y", function()
                 close()
-                vim.cmd("Git push")
+                vim.cmd("silent Git push")
               end, { buffer = buf, nowait = true })
 
               vim.keymap.set("n", "n", function()
