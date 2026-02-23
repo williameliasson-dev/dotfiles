@@ -27,6 +27,7 @@
       ripgrep
       claude-code
       opencode
+      azure-cli
 
       # File management & compression
       zip
@@ -36,9 +37,6 @@
 
       # Database & backend
       mariadb
-
-      # Exercise & learning
-      exercism
 
       # System utilities
       openssl
