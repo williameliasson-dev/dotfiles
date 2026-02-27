@@ -1,9 +1,7 @@
-{
-  inputs,
-  pkgs,
-  ...
-}:
-{
+{ inputs
+, pkgs
+, ...
+}: {
   imports = [
     ../modules/shared/kitty/kitty.nix
     ../modules/shared/zsh/zsh.nix
@@ -22,12 +20,12 @@
       gcc
       gnumake
       gh
+      git-lfs
       devenv
       kubectl
       ripgrep
       claude-code
       opencode
-      azure-cli
 
       # File management & compression
       zip

@@ -1,11 +1,7 @@
-{
-  pkgs,
-  inputs,
-  ...
-}:
-{
-
-
+{ pkgs
+, inputs
+, ...
+}: {
   # Nix settings
   nix.settings.experimental-features = "nix-command flakes";
 
@@ -30,7 +26,7 @@
 
     # Homebrew formulae (CLI tools)
     brews = [
-      "nvm"
+      "azure-cli"
     ];
 
     # Homebrew casks (GUI applications)
@@ -42,6 +38,7 @@
       "zed"
       "postman"
       "kitty"
+      "orbstack"
     ];
 
     # Mac    App Store apps (requires `mas` CLI)

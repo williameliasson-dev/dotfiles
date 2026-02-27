@@ -19,7 +19,13 @@
       autoCmd = [
         {
           event = "BufWritePre";
-          command = "lua vim.lsp.buf.format()";
+          command = ''
+            lua vim.lsp.buf.format({
+              filter = function(client)
+                return client.name == "biome" or client.name == "null-ls"
+              end
+            })
+          '';
         }
       ];
 
@@ -691,8 +697,11 @@
               shfmt.enable = true;
               nixpkgs_fmt.enable = true;
               google_java_format.enable = false;
-              prettier = {
+              biome = {
                 enable = true;
+              };
+              prettier = {
+                enable = false;
                 disableTsServerFormatter = true;
               };
             };
@@ -779,6 +788,11 @@
             bashls.enable = true; # Bash
             clangd.enable = true; # C/C++
             yamlls.enable = true; # YAML
+
+            biome = {
+              enable = true;
+              rootMarkers = [ "biome.json" "biome.jsonc" ".git" ];
+            };
 
             lua_ls = {
               # Lua
