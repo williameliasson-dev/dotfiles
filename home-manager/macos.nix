@@ -22,7 +22,6 @@
       gh
       git-lfs
       devenv
-      kubectl
       ripgrep
       claude-code
       opencode

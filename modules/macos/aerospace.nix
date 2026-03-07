@@ -89,6 +89,18 @@
           "workspace 5"
         ];
 
+        # ── Focus monitor ──────────────────────────────────────────
+        alt-cmd-h = "focus-monitor left";
+        alt-cmd-l = "focus-monitor right";
+        alt-cmd-j = "focus-monitor down";
+        alt-cmd-k = "focus-monitor up";
+
+        # ── Move window to monitor ─────────────────────────────────
+        alt-shift-cmd-h = "move-node-to-monitor left";
+        alt-shift-cmd-l = "move-node-to-monitor right";
+        alt-shift-cmd-j = "move-node-to-monitor down";
+        alt-shift-cmd-k = "move-node-to-monitor up";
+
         # ── Reload config ──────────────────────────────────────────
         alt-shift-semicolon = "reload-config";
       };

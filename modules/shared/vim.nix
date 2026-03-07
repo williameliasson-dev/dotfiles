@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   programs.nixvim = {
     config = {
       enable = true;
@@ -8,6 +7,7 @@
       globals.mapleader = " ";
       opts = {
         number = true;
+        relativenumber = true;
         spell = true;
         spelllang = [
           "en_gb"
@@ -30,6 +30,17 @@
       ];
 
       keymaps = [
+        # Toggle between relative and absolute line numbers
+        {
+          key = "<leader>ln";
+          action.__raw = ''
+            function()
+              vim.wo.relativenumber = not vim.wo.relativenumber
+            end
+          '';
+          options.desc = "Toggle relative/absolute line numbers";
+        }
+
         # Visual mode ctrl+shift+c to copy to clipboard
         {
           mode = "v";
@@ -521,6 +532,34 @@
       ];
 
       extraConfigLua = ''
+        -- Register JS debug adapters with dynamic port allocation
+        local dap = require('dap')
+        local js_debug_path = "${pkgs.vscode-js-debug}/lib/node_modules/js-debug/dist/src/dapDebugServer.js"
+
+        dap.adapters["pwa-node"] = {
+          type = "server",
+          host = "127.0.0.1",
+          port = "${"$"}{port}",
+          executable = {
+            command = "${pkgs.nodejs}/bin/node",
+            args = { js_debug_path, "${"$"}{port}", "127.0.0.1" },
+          },
+        }
+
+        -- "node" type used in .vscode/launch.json must map to "pwa-node" for vscode-js-debug
+        dap.adapters.node = function(cb, config)
+          config.type = "pwa-node"
+          cb({
+            type = "server",
+            host = "127.0.0.1",
+            port = "${"$"}{port}",
+            executable = {
+              command = "${pkgs.nodejs}/bin/node",
+              args = { js_debug_path, "${"$"}{port}", "127.0.0.1" },
+            },
+          })
+        end
+
         -- Wilder configuration for nice popup menus
         local wilder = require('wilder')
 
@@ -848,60 +887,44 @@
         dap = {
           enable = true;
           adapters = {
-            servers = {
-              pwa-node = {
-                host = "127.0.0.1";
-                port = 8123;
-                executable = {
-                  command = "${pkgs.nodejs}/bin/node";
-                  args = [
-                    "${pkgs.vscode-js-debug}/lib/node_modules/js-debug/dist/src/dapDebugServer.js"
-                    "8123"
-                    "127.0.0.1"
-                  ];
-                };
+            executables = {
+              debugpy = {
+                command = "${pkgs.python3Packages.debugpy}/bin/python";
+                args = [ "-m" "debugpy.adapter" ];
               };
             };
           };
           configurations = {
             javascript = [
               {
-                name = "Attach to Node.js";
-                type = "pwa-node";
-                request = "attach";
-                port = 9229;
-                address = "127.0.0.1";
-                localRoot = "\${workspaceFolder}";
-                remoteRoot = "\${workspaceFolder}";
-                sourceMaps = true;
-                restart = true;
-              }
-              {
                 name = "Launch file";
                 type = "pwa-node";
                 request = "launch";
                 program = "\${file}";
                 cwd = "\${workspaceFolder}";
+                sourceMaps = true;
+                skipFiles = [ "<node_internals>/**" ];
               }
             ];
             typescript = [
               {
-                name = "Attach to Node.js";
-                type = "pwa-node";
-                request = "attach";
-                port = 9229;
-                address = "127.0.0.1";
-                localRoot = "\${workspaceFolder}";
-                remoteRoot = "\${workspaceFolder}";
-                sourceMaps = true;
-                restart = true;
-              }
-              {
                 name = "Launch file";
                 type = "pwa-node";
                 request = "launch";
                 program = "\${file}";
                 cwd = "\${workspaceFolder}";
+                sourceMaps = true;
+                skipFiles = [ "<node_internals>/**" ];
+              }
+            ];
+            python = [
+              {
+                name = "Launch file";
+                type = "debugpy";
+                request = "launch";
+                program = "\${file}";
+                cwd = "\${workspaceFolder}";
+                justMyCode = false;
               }
             ];
           };

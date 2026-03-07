@@ -27,6 +27,11 @@
     # Homebrew formulae (CLI tools)
     brews = [
       "azure-cli"
+      "lazysql"
+      "fzf"
+      "kubectl"
+      "Azure/kubelogin/kubelogin"
+      "k9s"
     ];
 
     # Homebrew casks (GUI applications)
@@ -39,6 +44,8 @@
       "postman"
       "kitty"
       "orbstack"
+      "dbeaver-community"
+      "insomnia"
     ];
 
     # Mac    App Store apps (requires `mas` CLI)
