@@ -27,6 +27,7 @@
     # Homebrew formulae (CLI tools)
     brews = [
       "azure-cli"
+      "dotnet"
       "lazysql"
       "fzf"
       "kubectl"
