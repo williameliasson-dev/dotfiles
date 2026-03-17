@@ -1,71 +1,109 @@
 {
-  "logo": {
-    "type": "small",
-    "padding": {
-      "top": 1,
-      "left": 2,
-    },
-  },
-  "modules": [
-    "break",
-    {
-      "type": "custom",
-      "format": "\u001b[90m┌─────────Hardware─────────┐",
-    },
-    {
-      "type": "cpu",
-      "key": "│ ├",
-      "showPeCoreCount": true,
-      "keyColor": "green",
-    },
-    {
-      "type": "gpu",
-      "key": "│ ├󰍛",
-      "keyColor": "green",
-    },
-    {
-      "type": "memory",
-      "key": "│ ├󰍛",
-      "keyColor": "green",
-    },
-    {
-      "type": "disk",
-      "key": "└ └",
-      "keyColor": "green",
-    },
-    {
-      "type": "custom",
-      "format": "\u001b[90m└──────────────────────────┘",
-    },
-    "break",
-    {
-      "type": "custom",
-      "format": "\u001b[90m┌─────────Software─────────┐",
-    },
-    {
-      "type": "os",
-      "key": " OS",
-      "keyColor": "yellow",
-    },
-    {
-      "type": "kernel",
-      "key": "│ ├",
-      "keyColor": "yellow",
-    },
-    {
-      "type": "packages",
-      "key": "│ ├󰏖",
-      "keyColor": "yellow",
-    },
-    {
-      "type": "shell",
-      "key": "└ └",
-      "keyColor": "yellow",
-    },
-    {
-      "type": "custom",
-      "format": "\u001b[90m└──────────────────────────┘",
-    },
-    "break",
-  ],
+	"$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+	"logo": {
+		"type": "kitty-direct",
+		"source": "~/.config/fastfetch/apple-logo.png",
+		"position": "top",
+		"width": 50,
+		"padding": {
+			"top": 1,
+			"left": 2
+		}
+	},
+	"display": {
+		"separator": "  "
+	},
+	"modules": [
+		"break",
+		{
+			"type": "custom",
+			"format": "\u001b[1;33m     \u001b[1;32m \u001b[1;36m \u001b[1;34m \u001b[1;35m"
+		},
+		{
+			"type": "custom",
+			"format": "\u001b[1;32m ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓"
+		},
+		{
+			"type": "title",
+			"key": " ┃  ",
+			"keyColor": "green"
+		},
+		{
+			"type": "custom",
+			"format": "\u001b[1;32m ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫"
+		},
+		"break",
+		{
+			"type": "os",
+			"key": " ┃   ",
+			"keyColor": "green"
+		},
+		{
+			"type": "host",
+			"key": " ┃  󰌢 ",
+			"keyColor": "green"
+		},
+		{
+			"type": "kernel",
+			"key": " ┃   ",
+			"keyColor": "yellow"
+		},
+		{
+			"type": "uptime",
+			"key": " ┃   ",
+			"keyColor": "yellow"
+		},
+		{
+			"type": "shell",
+			"key": " ┃   ",
+			"keyColor": "red"
+		},
+		{
+			"type": "wm",
+			"key": " ┃   ",
+			"keyColor": "red"
+		},
+		{
+			"type": "terminal",
+			"key": " ┃   ",
+			"keyColor": "magenta"
+		},
+		{
+			"type": "cpu",
+			"key": " ┃   ",
+			"keyColor": "magenta",
+			"showPeCoreCount": true
+		},
+		{
+			"type": "gpu",
+			"key": " ┃  󰍛 ",
+			"keyColor": "blue"
+		},
+		{
+			"type": "memory",
+			"key": " ┃  󰑭 ",
+			"keyColor": "blue"
+		},
+		{
+			"type": "disk",
+			"key": " ┃   ",
+			"keyColor": "cyan"
+		},
+		{
+			"type": "packages",
+			"key": " ┃  󰏖 ",
+			"keyColor": "cyan"
+		},
+		"break",
+		{
+			"type": "custom",
+			"format": "\u001b[1;34m ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛"
+		},
+		{
+			"type": "colors",
+			"paddingLeft": 3,
+			"symbol": "circle"
+		},
+		"break"
+	]
 }
