@@ -33,6 +33,7 @@
       "kubectl"
       "Azure/kubelogin/kubelogin"
       "k9s"
+      "libpq"
     ];
 
     # Homebrew casks (GUI applications)

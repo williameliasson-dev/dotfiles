@@ -22,6 +22,9 @@ export PATH=$HOME/.local/bin:$PATH
 export EDITOR='nvim'
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent"
 
+#psql 
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
 #NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

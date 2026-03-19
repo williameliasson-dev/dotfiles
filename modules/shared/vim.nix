@@ -151,33 +151,49 @@
           options.desc = "Exit terminal mode";
         }
 
-        # Opencode
+        # Claude (kitty) - send context + prompt to Claude in another kitty window
         {
-          mode = [
-            "n"
-            "v"
-          ];
-          key = "<leader>aa";
-          action.__raw = "function() require('opencode').ask('@this: ', { submit = true }) end";
-          options.desc = "Ask opencode";
-        }
-        {
-          mode = [
-            "n"
-            "v"
-          ];
+          mode = "n";
           key = "<leader>ac";
-          action.__raw = "function() require('opencode').toggle() end";
-          options.desc = "Toggle opencode";
+          action.__raw = ''
+            function()
+              local file = vim.fn.expand('%:p')
+              local lnum = vim.fn.line('.')
+              local line_content = vim.fn.getline('.')
+              local prompt = vim.fn.input('Ask Claude: ')
+              if prompt == "" then return end
+              local text = string.format(
+                "In %s at line %d: `%s` — %s",
+                file, lnum, line_content, prompt
+              )
+              local socket = 'unix:/tmp/kitty-' .. vim.fn.getenv('KITTY_PID')
+              vim.fn.system({'kitty', '@', '--to', socket, 'send-text', '--match', 'title:Claude', text .. "\r"})
+            end
+          '';
+          options.desc = "Ask Claude in kitty (current line)";
         }
         {
-          mode = [
-            "n"
-            "v"
-          ];
-          key = "<leader>as";
-          action.__raw = "function() require('opencode').select() end";
-          options.desc = "Opencode select";
+          mode = "v";
+          key = "<leader>ac";
+          action.__raw = ''
+            function()
+              vim.cmd('normal! "vy')
+              local selection = vim.fn.getreg('v')
+              local file = vim.fn.expand('%:p')
+              local start_line = vim.fn.line("'<")
+              local end_line = vim.fn.line("'>")
+              local prompt = vim.fn.input('Ask Claude: ')
+              if prompt == "" then return end
+              selection = selection:gsub("\n", " ")
+              local text = string.format(
+                "In %s lines %d-%d: `%s` — %s",
+                file, start_line, end_line, selection, prompt
+              )
+              local socket = 'unix:/tmp/kitty-' .. vim.fn.getenv('KITTY_PID')
+              vim.fn.system({'kitty', '@', '--to', socket, 'send-text', '--match', 'title:Claude', text .. "\r"})
+            end
+          '';
+          options.desc = "Ask Claude in kitty (selection)";
         }
 
         #TELESCOPE
@@ -363,6 +379,15 @@
           key = "<leader>gx";
           options = {
             desc = "Diffview close";
+          };
+        }
+
+        # DADBOD
+        {
+          action = "<cmd>DBUIToggle<CR>";
+          key = "<leader>DD";
+          options = {
+            desc = "Toggle Dadbod UI";
           };
         }
 
@@ -695,6 +720,10 @@
                 name = "buffer";
                 priority = 600;
               }
+              {
+                name = "vim-dadbod-completion";
+                priority = 500;
+              }
             ];
           };
         };
@@ -884,6 +913,18 @@
           enable = true;
         };
 
+        vim-dadbod = {
+          enable = true;
+        };
+
+        vim-dadbod-ui = {
+          enable = true;
+        };
+
+        vim-dadbod-completion = {
+          enable = true;
+        };
+
         dap = {
           enable = true;
           adapters = {
@@ -938,9 +979,6 @@
           enable = true;
         };
 
-        opencode = {
-          enable = true;
-        };
       };
     };
   };
