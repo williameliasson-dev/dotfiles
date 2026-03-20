@@ -43,7 +43,10 @@
       # nix-darwin configurations (for macOS)
       darwinConfigurations = {
         "macos" = nix-darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
+          pkgs = import nixpkgs {
+            system = "aarch64-darwin";
+            config.allowUnfree = true;
+          };
           specialArgs = { inherit inputs outputs; };
           modules = [
             ./darwin/configuration.nix
@@ -55,6 +58,7 @@
               home-manager.users.william = import ./home-manager/macos.nix;
               home-manager.sharedModules = [
                 inputs.nixvim.homeModules.nixvim
+                { programs.nixvim.nixpkgs.config.allowUnfree = true; }
               ];
             }
           ];

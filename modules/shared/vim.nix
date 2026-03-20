@@ -151,49 +151,32 @@
           options.desc = "Exit terminal mode";
         }
 
-        # Claude (kitty) - send context + prompt to Claude in another kitty window
+        # Claude Code
         {
-          mode = "n";
-          key = "<leader>ac";
-          action.__raw = ''
-            function()
-              local file = vim.fn.expand('%:p')
-              local lnum = vim.fn.line('.')
-              local line_content = vim.fn.getline('.')
-              local prompt = vim.fn.input('Ask Claude: ')
-              if prompt == "" then return end
-              local text = string.format(
-                "In %s at line %d: `%s` — %s",
-                file, lnum, line_content, prompt
-              )
-              local socket = 'unix:/tmp/kitty-' .. vim.fn.getenv('KITTY_PID')
-              vim.fn.system({'kitty', '@', '--to', socket, 'send-text', '--match', 'title:Claude', text .. "\r"})
-            end
-          '';
-          options.desc = "Ask Claude in kitty (current line)";
+          key = "<leader>cc";
+          action = "<cmd>ClaudeCode<CR>";
+          options.desc = "Toggle Claude Code";
+        }
+        {
+          key = "<leader>cf";
+          action = "<cmd>ClaudeCodeFocus<CR>";
+          options.desc = "Focus Claude Code";
         }
         {
           mode = "v";
-          key = "<leader>ac";
-          action.__raw = ''
-            function()
-              vim.cmd('normal! "vy')
-              local selection = vim.fn.getreg('v')
-              local file = vim.fn.expand('%:p')
-              local start_line = vim.fn.line("'<")
-              local end_line = vim.fn.line("'>")
-              local prompt = vim.fn.input('Ask Claude: ')
-              if prompt == "" then return end
-              selection = selection:gsub("\n", " ")
-              local text = string.format(
-                "In %s lines %d-%d: `%s` — %s",
-                file, start_line, end_line, selection, prompt
-              )
-              local socket = 'unix:/tmp/kitty-' .. vim.fn.getenv('KITTY_PID')
-              vim.fn.system({'kitty', '@', '--to', socket, 'send-text', '--match', 'title:Claude', text .. "\r"})
-            end
-          '';
-          options.desc = "Ask Claude in kitty (selection)";
+          key = "<leader>cs";
+          action = "<cmd>ClaudeCodeSend<CR>";
+          options.desc = "Send selection to Claude";
+        }
+        {
+          key = "<leader>ca";
+          action = "<cmd>ClaudeCodeDiffAccept<CR>";
+          options.desc = "Accept Claude diff";
+        }
+        {
+          key = "<leader>cd";
+          action = "<cmd>ClaudeCodeDiffDeny<CR>";
+          options.desc = "Deny Claude diff";
         }
 
         #TELESCOPE
@@ -556,7 +539,19 @@
         }
       ];
 
+      extraPlugins = with pkgs.vimPlugins; [
+        snacks-nvim
+        claudecode-nvim
+      ];
+
       extraConfigLua = ''
+        require('claudecode').setup({
+          terminal = {
+            split_side = "right",
+            split_width_percentage = 0.4,
+          },
+        })
+
         -- Register JS debug adapters with dynamic port allocation
         local dap = require('dap')
         local js_debug_path = "${pkgs.vscode-js-debug}/lib/node_modules/js-debug/dist/src/dapDebugServer.js"
@@ -978,7 +973,6 @@
         dap-virtual-text = {
           enable = true;
         };
-
       };
     };
   };
