@@ -801,28 +801,12 @@
         lsp = {
           enable = true;
           servers = {
-            ts_ls = {
+            vtsls = {
               enable = true;
-              extraOptions = {
-                init_options = {
-                  preferences = {
-                    includeCompletionsForModuleExports = true;
-                    includeCompletionsWithInsertText = true;
-                    includeCompletionsWithSnippetText = true;
-                  };
-                };
-              };
               settings = {
-                implicitProjectConfiguration = {
-                  checkJs = true;
-                  target = "ES2022";
-                };
                 javascript = {
                   suggest = {
                     completeFunctionCalls = true;
-                    includeCompletionsWithSnippetText = true;
-                    includeCompletionsForModuleExports = true;
-                    includeCompletionsWithInsertText = true;
                   };
                   format = {
                     enable = true;
@@ -831,9 +815,6 @@
                 typescript = {
                   suggest = {
                     completeFunctionCalls = true;
-                    includeCompletionsWithSnippetText = true;
-                    includeCompletionsForModuleExports = true;
-                    includeCompletionsWithInsertText = true;
                   };
                   format = {
                     enable = true;
