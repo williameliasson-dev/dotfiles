@@ -31,6 +31,9 @@
       "Azure/kubelogin/kubelogin"
       "k9s"
       "libpq"
+      "pkgconf"
+      "spicedb"
+      "authzed/tap/zed"
     ];
 
     # Homebrew casks (GUI applications)
@@ -39,7 +42,6 @@
       "slack"
       "ungoogled-chromium"
       "obsidian"
-      "zed"
       "postman"
       "kitty"
       "orbstack"

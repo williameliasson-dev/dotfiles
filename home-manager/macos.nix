@@ -40,6 +40,7 @@
       killall
       btop
       fastfetch
+      ripgrep
 
       # Fonts
       nerd-fonts.fira-code

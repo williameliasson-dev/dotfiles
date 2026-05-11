@@ -16,15 +16,21 @@
         clipboard = "unnamedplus"; # Enable system clipboard integration
       };
 
+      globals.rustfmt_autosave = 0; # Disable rust.vim's broken rustfmt integration
+
       autoCmd = [
         {
           event = "BufWritePre";
-          command = ''
-            lua vim.lsp.buf.format({
-              filter = function(client)
-                return client.name == "biome" or client.name == "null-ls"
-              end
-            })
+          pattern = "*";
+          callback.__raw = ''
+            function()
+              vim.lsp.buf.format({
+                filter = function(client)
+                  return client.name == "biome" or client.name == "null-ls" or client.name == "rust_analyzer"
+                end,
+                timeout_ms = 3000,
+              })
+            end
           '';
         }
       ];
@@ -146,7 +152,7 @@
         # Terminal
         {
           mode = [ "t" ];
-          key = "<Esc><Esc>";
+          key = "<C-space>";
           action = "<C-\\><C-n>";
           options.desc = "Exit terminal mode";
         }
@@ -542,9 +548,12 @@
       extraPlugins = with pkgs.vimPlugins; [
         snacks-nvim
         claudecode-nvim
+        kitty-scrollback-nvim
       ];
 
       extraConfigLua = ''
+        require('kitty-scrollback').setup()
+
         require('claudecode').setup({
           terminal = {
             split_side = "right",
@@ -566,19 +575,13 @@
           },
         }
 
-        -- "node" type used in .vscode/launch.json must map to "pwa-node" for vscode-js-debug
-        dap.adapters.node = function(cb, config)
-          config.type = "pwa-node"
-          cb({
-            type = "server",
-            host = "127.0.0.1",
-            port = "${"$"}{port}",
-            executable = {
-              command = "${pkgs.nodejs}/bin/node",
-              args = { js_debug_path, "${"$"}{port}", "127.0.0.1" },
-            },
-          })
-        end
+        -- "node" adapter reuses pwa-node (vscode-js-debug handles both)
+        dap.adapters.node = dap.adapters["pwa-node"]
+
+        -- Map VS Code launch.json types to filetypes (dap reads .vscode/launch.json automatically)
+        local vscode = require('dap.ext.vscode')
+        vscode.type_to_filetypes["node"] = { "typescript", "javascript" }
+        vscode.type_to_filetypes["debugpy"] = { "python" }
 
         -- Wilder configuration for nice popup menus
         local wilder = require('wilder')
@@ -658,6 +661,7 @@
               "markdown_inline"
               "nix"
               "python"
+              "rust"
               "typescript"
               "yaml"
             ];
@@ -696,10 +700,6 @@
             };
             sources = [
               {
-                name = "copilot";
-                priority = 1000;
-              }
-              {
                 name = "nvim_lsp";
                 priority = 900;
               }
@@ -732,14 +732,6 @@
           enable = true;
         };
 
-        copilot-lua = {
-          enable = true;
-        };
-
-        copilot-cmp = {
-          enable = true;
-        };
-
         none-ls = {
           enable = true;
           sources = {
@@ -760,6 +752,7 @@
               shfmt.enable = true;
               nixpkgs_fmt.enable = true;
               google_java_format.enable = false;
+              rustfmt.enable = true;
               biome = {
                 enable = true;
               };
@@ -804,20 +797,44 @@
             vtsls = {
               enable = true;
               settings = {
-                javascript = {
-                  suggest = {
-                    completeFunctionCalls = true;
-                  };
-                  format = {
-                    enable = true;
+                # Limit memory and reduce scope
+                vtsls = {
+                  experimental = {
+                    maxInlayHintLength = 30;
+                    completion = {
+                      enableServerSideFuzzyMatch = true;
+                    };
                   };
                 };
                 typescript = {
+                  tsserver = {
+                    maxTsServerMemory = 4096;
+                    watchOptions = {
+                      excludeDirectories = [ "**/node_modules" "**/.git" "**/dist" "**/.nx" "**/coverage" "**/test-results" ];
+                    };
+                  };
                   suggest = {
                     completeFunctionCalls = true;
+                    autoImports = true; # Keep auto imports
                   };
                   format = {
-                    enable = true;
+                    enable = false; # Use biome instead
+                  };
+                  # Disable file move updates to reduce load
+                  updateImportsOnFileMove = {
+                    enabled = "never";
+                  };
+                };
+                javascript = {
+                  suggest = {
+                    completeFunctionCalls = true;
+                    autoImports = true; # Keep auto imports
+                  };
+                  format = {
+                    enable = false; # Use biome instead
+                  };
+                  updateImportsOnFileMove = {
+                    enabled = "never";
                   };
                 };
               };
@@ -849,6 +866,7 @@
               enable = true;
               installRustc = true;
               installCargo = true;
+              installRustfmt = true;
               settings = {
                 procMacro = {
                   enable = true;
@@ -911,40 +929,7 @@
               };
             };
           };
-          configurations = {
-            javascript = [
-              {
-                name = "Launch file";
-                type = "pwa-node";
-                request = "launch";
-                program = "\${file}";
-                cwd = "\${workspaceFolder}";
-                sourceMaps = true;
-                skipFiles = [ "<node_internals>/**" ];
-              }
-            ];
-            typescript = [
-              {
-                name = "Launch file";
-                type = "pwa-node";
-                request = "launch";
-                program = "\${file}";
-                cwd = "\${workspaceFolder}";
-                sourceMaps = true;
-                skipFiles = [ "<node_internals>/**" ];
-              }
-            ];
-            python = [
-              {
-                name = "Launch file";
-                type = "debugpy";
-                request = "launch";
-                program = "\${file}";
-                cwd = "\${workspaceFolder}";
-                justMyCode = false;
-              }
-            ];
-          };
+          # Configurations loaded from .vscode/launch.json via dap.ext.vscode
         };
 
         dap-ui = {
