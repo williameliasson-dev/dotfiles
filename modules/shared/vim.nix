@@ -802,10 +802,6 @@
           };
         };
 
-        presence = {
-          enable = true;
-        };
-
         # Language server
         lsp = {
           enable = true;

@@ -7,15 +7,15 @@
   imports = [
     ../modules/shared/kitty/kitty.nix
     ../modules/shared/zsh/zsh.nix
-    ../modules/arch/rofi/rofi.nix
     ../modules/shared/vim.nix
+    ../modules/shared/git.nix
+    ../modules/arch/rofi/rofi.nix
     ../modules/arch/hyprpaper/hyprpaper.nix
-    ../modules/shared/fastfetch/fastfetch.nix
     ../modules/arch/hyprland/hyprland.nix
     ../modules/arch/waybar/waybar.nix
     ../modules/arch/dunst.nix
-    ../modules/shared/git.nix
     ../modules/arch/hyprlock/hyprlock.nix
+    ../modules/arch/fastfetch/fastfetch.nix
     inputs.nixvim.homeModules.nixvim
   ];
 

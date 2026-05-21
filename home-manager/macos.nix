@@ -1,14 +1,16 @@
-{ inputs
-, pkgs
-, ...
-}: {
+{
+  inputs,
+  pkgs,
+  ...
+}:
+{
   imports = [
     ../modules/shared/kitty/kitty.nix
     ../modules/shared/zsh/zsh.nix
     ../modules/shared/vim.nix
-    ../modules/shared/fastfetch/fastfetch.nix
     ../modules/shared/git.nix
     ../modules/macos/aerospace.nix
+    ../modules/macos/fastfetch/fastfetch.nix
   ];
 
   home = {

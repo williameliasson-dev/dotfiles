@@ -85,15 +85,6 @@
           on-click = "pavucontrol";
         };
 
-        "custom/nordlayer" = {
-          exec = "nordlayer status | grep -q 'VPN: Connected' && echo '󰦝 Connected' || echo '󰦞 Disconnected'";
-          interval = 5;
-          format = "{}";
-          tooltip = true;
-          tooltip-format = "NordLayer VPN";
-          on-click = "nordlayer connect";
-        };
-
         "custom/power" = {
           format = "󰐥";
           on-click = "rofi -show power-menu -modi power-menu:rofi-power-menu";
