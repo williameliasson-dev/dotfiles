@@ -34,6 +34,7 @@
       "pkgconf"
       "spicedb"
       "authzed/tap/zed"
+      "mkcert"
     ];
 
     # Homebrew casks (GUI applications)

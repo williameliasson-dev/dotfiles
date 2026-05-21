@@ -438,6 +438,20 @@
           };
         }
         {
+          action = "<cmd>lua vim.lsp.buf.rename()<CR>";
+          key = "<leader>rn";
+          options = {
+            desc = "Rename symbol";
+          };
+        }
+        {
+          action = "<cmd>lua require('spectre').toggle()<CR>";
+          key = "<leader>sr";
+          options = {
+            desc = "Search and replace across project";
+          };
+        }
+        {
           action = "<cmd>Telescope lsp_definitions<CR>";
           key = "gd";
           options = {
@@ -549,9 +563,11 @@
         snacks-nvim
         claudecode-nvim
         kitty-scrollback-nvim
+        nvim-spectre
       ];
 
       extraConfigLua = ''
+        require('spectre').setup()
         require('kitty-scrollback').setup()
 
         require('claudecode').setup({
@@ -807,8 +823,9 @@
                   };
                 };
                 typescript = {
+                  enableProjectDiagnostics = false;
                   tsserver = {
-                    maxTsServerMemory = 4096;
+                    maxTsServerMemory = 8192;
                     watchOptions = {
                       excludeDirectories = [ "**/node_modules" "**/.git" "**/dist" "**/.nx" "**/coverage" "**/test-results" ];
                     };
