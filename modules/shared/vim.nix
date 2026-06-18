@@ -152,7 +152,13 @@
         # Terminal
         {
           mode = [ "t" ];
-          key = "<C-space>";
+          key = "<C-Space>";
+          action = "<C-\\><C-n>";
+          options.desc = "Exit terminal mode";
+        }
+        {
+          mode = [ "t" ];
+          key = "<C-@>";
           action = "<C-\\><C-n>";
           options.desc = "Exit terminal mode";
         }
@@ -492,6 +498,23 @@
 
         {
           mode = "i";
+          key = "<C-@>";
+          action.__raw = ''
+            function()
+              local cmp = require('cmp')
+              if not cmp.visible() then
+                return cmp.complete()
+              end
+            end
+          '';
+          options = {
+            silent = true;
+            desc = "Trigger suggestions";
+          };
+        }
+
+        {
+          mode = "i";
           key = "<C-Space>";
           action.__raw = ''
             function()
@@ -567,6 +590,36 @@
       ];
 
       extraConfigLua = ''
+        -- Tell kitty to leave Ctrl+Space alone while editing (kitty nav mode entry)
+        local kitty_var_on = "\27]1337;SetUserVar=in_editor=MQ==\7"
+        local kitty_var_off = "\27]1337;SetUserVar=in_editor\7"
+        vim.o.t_TI = (vim.o.t_TI or "") .. kitty_var_on
+        vim.o.t_TE = (vim.o.t_TE or "") .. kitty_var_off
+        local function kitty_set_in_editor_var()
+          if vim.api.nvim_ui_send then
+            vim.api.nvim_ui_send(kitty_var_on)
+          else
+            io.stdout:write(kitty_var_on)
+            io.stdout:flush()
+          end
+        end
+        local function kitty_unset_in_editor_var()
+          if vim.api.nvim_ui_send then
+            vim.api.nvim_ui_send(kitty_var_off)
+          else
+            io.stdout:write(kitty_var_off)
+            io.stdout:flush()
+          end
+        end
+        vim.api.nvim_create_autocmd({ "VimEnter", "VimResume" }, {
+          group = vim.api.nvim_create_augroup("KittySetInEditor", { clear = true }),
+          callback = kitty_set_in_editor_var,
+        })
+        vim.api.nvim_create_autocmd({ "VimLeave", "VimSuspend" }, {
+          group = vim.api.nvim_create_augroup("KittyUnsetInEditor", { clear = true }),
+          callback = kitty_unset_in_editor_var,
+        })
+
         require('spectre').setup()
         require('kitty-scrollback').setup()
 

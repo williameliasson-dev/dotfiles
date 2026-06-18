@@ -19,6 +19,7 @@
       autoUpdate = true;
       cleanup = "zap"; # Remove formulae not listed here
       upgrade = true;
+      extraFlags = [ "--force" ]; # Homebrew 4.x requires --force with --cleanup
     };
 
     # Homebrew formulae (CLI tools)
@@ -35,6 +36,7 @@
       "spicedb"
       "authzed/tap/zed"
       "mkcert"
+      "agavra/tap/tuicr"
     ];
 
     # Homebrew casks (GUI applications)
@@ -48,6 +50,7 @@
       "orbstack"
       "dbeaver-community"
       "insomnia"
+      "codex"
     ];
 
     # Mac    App Store apps (requires `mas` CLI)

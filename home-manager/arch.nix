@@ -1,12 +1,10 @@
-{
-  inputs,
-  pkgs,
-  ...
-}:
-{
+{ inputs
+, pkgs
+, ...
+}: {
   imports = [
     ../modules/shared/kitty/kitty.nix
-    ../modules/shared/zsh/zsh.nix
+    ../modules/arch/zsh/zsh.nix
     ../modules/shared/vim.nix
     ../modules/shared/git.nix
     ../modules/arch/rofi/rofi.nix

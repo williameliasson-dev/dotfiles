@@ -1,0 +1,42 @@
+# History settings
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt SHARE_HISTORY
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+
+eval "$(oh-my-posh init zsh --config $OMP_THEME_DIR/gruvbox.omp.json)"
+
+# Aliases
+alias vim="nvim"
+alias ll="ls -l"
+alias update="home-manager switch --flake ~/.config/home-manager#william@laptop"
+alias nixflake="cd ~/.config/home-manager && nvim flake.nix"
+alias ..="cd .."
+
+fastfetch
+
+export VOLTA_HOME="$HOME/code/.volta" 
+export PATH=$HOME/.local/bin:$PATH
+export EDITOR='nvim'
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent"
+
+#psql 
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+#NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm (Homebrew)
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion (Homebrew)
+
+# NOTE: Plugin sources are appended by Nix configuration
+
+# Key bindings for history substring search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+export PATH=/usr/bin:/usr/local/bin:$PATH
