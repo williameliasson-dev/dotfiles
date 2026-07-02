@@ -214,7 +214,7 @@ else
 			PROFILE_FILE="$HOME/.bash_profile"
 		fi
 
-		if ! grep -q "exec Hyprland" "$PROFILE_FILE" 2>/dev/null; then
+		if ! grep -q "exec start-hyprland" "$PROFILE_FILE" 2>/dev/null; then
 			cat >>"$PROFILE_FILE" <<'EOF'
 
 # Auto-start Hyprland on TTY1
