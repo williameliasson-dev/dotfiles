@@ -37,6 +37,7 @@
       "authzed/tap/zed"
       "mkcert"
       "agavra/tap/tuicr"
+      "pulumi/tap/pulumi"
     ];
 
     # Homebrew casks (GUI applications)

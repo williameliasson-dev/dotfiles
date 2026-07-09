@@ -593,8 +593,6 @@
         -- Tell kitty to leave Ctrl+Space alone while editing (kitty nav mode entry)
         local kitty_var_on = "\27]1337;SetUserVar=in_editor=MQ==\7"
         local kitty_var_off = "\27]1337;SetUserVar=in_editor\7"
-        vim.o.t_TI = (vim.o.t_TI or "") .. kitty_var_on
-        vim.o.t_TE = (vim.o.t_TE or "") .. kitty_var_off
         local function kitty_set_in_editor_var()
           if vim.api.nvim_ui_send then
             vim.api.nvim_ui_send(kitty_var_on)
@@ -821,7 +819,6 @@
               shfmt.enable = true;
               nixpkgs_fmt.enable = true;
               google_java_format.enable = false;
-              rustfmt.enable = true;
               biome = {
                 enable = true;
               };

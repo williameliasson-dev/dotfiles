@@ -5,6 +5,7 @@
 }: {
   home.file.".zshrc".text = ''
     export OMP_THEME_DIR="${pkgs.oh-my-posh}/share/oh-my-posh/themes"
+    export OMP_CONFIG="${../../shared/oh-my-posh/gruvbox.omp.json}"
     ${builtins.readFile ./zshrc}
 
     # Load zsh plugins

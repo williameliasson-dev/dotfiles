@@ -7,7 +7,7 @@ setopt APPEND_HISTORY
 setopt INC_APPEND_HISTORY
 setopt HIST_IGNORE_DUPS
 
-eval "$(oh-my-posh init zsh --config $OMP_THEME_DIR/gruvbox.omp.json)"
+eval "$(oh-my-posh init zsh --config $OMP_CONFIG)"
 
 # Aliases
 alias vim="nvim"
