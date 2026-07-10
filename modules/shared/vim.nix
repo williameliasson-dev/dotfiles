@@ -618,6 +618,8 @@
           callback = kitty_unset_in_editor_var,
         })
 
+        vim.diagnostic.config({ virtual_text = false, virtual_lines = true })
+
         require('spectre').setup()
         require('kitty-scrollback').setup()
 
@@ -927,27 +929,22 @@
             # Rust
             rust_analyzer = {
               enable = true;
-              installRustc = true;
-              installCargo = true;
-              installRustfmt = true;
               settings = {
                 procMacro = {
                   enable = true;
                 };
-                diagnostics.enabled = true;
+                diagnostics.enable = true;
                 inlayHints.enable = true;
                 checkOnSave = true;
-                command = "clippy";
+                check = {
+                  command = "clippy";
+                };
               };
             };
           };
         };
 
         telescope = {
-          enable = true;
-        };
-
-        lsp-lines = {
           enable = true;
         };
 

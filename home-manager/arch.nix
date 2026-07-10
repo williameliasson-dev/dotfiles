@@ -82,6 +82,7 @@
 
   programs = {
     home-manager.enable = true;
+    nixvim.nixpkgs.source = inputs.nixpkgs;
   };
 
   programs.gh.enable = true;
