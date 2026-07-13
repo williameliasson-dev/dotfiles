@@ -26,7 +26,7 @@
             function()
               vim.lsp.buf.format({
                 filter = function(client)
-                  return client.name == "biome" or client.name == "null-ls" or client.name == "rust_analyzer"
+                  return client.name == "oxfmt" or client.name == "null-ls" or client.name == "rust_analyzer"
                 end,
                 timeout_ms = 3000,
               })
@@ -630,6 +630,13 @@
           },
         })
 
+        vim.lsp.config("oxfmt", {
+          cmd = { "pnpm", "oxfmt", "--lsp" },
+          filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "json", "jsonc", "css" },
+          root_markers = { ".oxfmtrc.json", ".oxfmtrc.generated.json", "package.json", ".git" },
+        })
+        vim.lsp.enable("oxfmt")
+
         -- Register JS debug adapters with dynamic port allocation
         local dap = require('dap')
         local js_debug_path = "${pkgs.vscode-js-debug}/lib/node_modules/js-debug/dist/src/dapDebugServer.js"
@@ -821,9 +828,6 @@
               shfmt.enable = true;
               nixpkgs_fmt.enable = true;
               google_java_format.enable = false;
-              biome = {
-                enable = true;
-              };
               prettier = {
                 enable = false;
                 disableTsServerFormatter = true;
@@ -883,7 +887,7 @@
                     autoImports = true; # Keep auto imports
                   };
                   format = {
-                    enable = false; # Use biome instead
+                    enable = false; # Use oxfmt instead
                   };
                   # Disable file move updates to reduce load
                   updateImportsOnFileMove = {
@@ -896,7 +900,7 @@
                     autoImports = true; # Keep auto imports
                   };
                   format = {
-                    enable = false; # Use biome instead
+                    enable = false; # Use oxfmt instead
                   };
                   updateImportsOnFileMove = {
                     enabled = "never";
@@ -914,11 +918,6 @@
             bashls.enable = true; # Bash
             clangd.enable = true; # C/C++
             yamlls.enable = true; # YAML
-
-            biome = {
-              enable = true;
-              rootMarkers = [ "biome.json" "biome.jsonc" ".git" ];
-            };
 
             lua_ls = {
               # Lua
