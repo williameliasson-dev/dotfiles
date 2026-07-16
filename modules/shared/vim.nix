@@ -618,7 +618,7 @@
           callback = kitty_unset_in_editor_var,
         })
 
-        vim.diagnostic.config({ virtual_text = false, virtual_lines = true })
+        vim.diagnostic.config({ virtual_text = false, virtual_lines = { current_line = true } })
 
         require('spectre').setup()
         require('kitty-scrollback').setup()
