@@ -928,6 +928,8 @@
             # Rust
             rust_analyzer = {
               enable = true;
+              installCargo = false;
+              installRustc = false;
               settings = {
                 procMacro = {
                   enable = true;
