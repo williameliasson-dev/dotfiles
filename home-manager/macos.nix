@@ -6,6 +6,7 @@
     ../modules/shared/kitty/kitty.nix
     ../modules/shared/vim.nix
     ../modules/shared/git.nix
+    ../modules/shared/yazi.nix
     ../modules/macos/zsh/zsh.nix
     ../modules/macos/aerospace.nix
     ../modules/macos/fastfetch/fastfetch.nix
@@ -30,7 +31,6 @@
       # File management & compression
       zip
       unzip
-      yazi
       sshfs
 
       # Database & backend

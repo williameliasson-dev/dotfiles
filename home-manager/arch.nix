@@ -7,6 +7,7 @@
     ../modules/arch/zsh/zsh.nix
     ../modules/shared/vim.nix
     ../modules/shared/git.nix
+    ../modules/shared/yazi.nix
     ../modules/arch/rofi/rofi.nix
     ../modules/arch/hyprpaper/hyprpaper.nix
     ../modules/arch/hyprland/hyprland.nix
@@ -37,7 +38,6 @@
       # File management & compression
       zip
       unzip
-      yazi
       sshfs
 
       # Database & backend
