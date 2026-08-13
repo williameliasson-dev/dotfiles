@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs.nixvim = {
     config = {
       enable = true;
@@ -17,23 +17,6 @@
       };
 
       globals.rustfmt_autosave = 0; # Disable rust.vim's broken rustfmt integration
-
-      autoCmd = [
-        {
-          event = "BufWritePre";
-          pattern = "*";
-          callback.__raw = ''
-            function()
-              vim.lsp.buf.format({
-                filter = function(client)
-                  return client.name == "oxfmt" or client.name == "null-ls" or client.name == "rust_analyzer"
-                end,
-                timeout_ms = 3000,
-              })
-            end
-          '';
-        }
-      ];
 
       keymaps = [
         # Toggle between relative and absolute line numbers
@@ -151,13 +134,13 @@
 
         # Terminal
         {
-          mode = [ "t" ];
+          mode = ["t"];
           key = "<C-Space>";
           action = "<C-\\><C-n>";
           options.desc = "Exit terminal mode";
         }
         {
-          mode = [ "t" ];
+          mode = ["t"];
           key = "<C-@>";
           action = "<C-\\><C-n>";
           options.desc = "Exit terminal mode";
@@ -630,13 +613,6 @@
           },
         })
 
-        vim.lsp.config("oxfmt", {
-          cmd = { "pnpm", "oxfmt", "--lsp" },
-          filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "json", "jsonc", "css" },
-          root_markers = { ".oxfmtrc.json", ".oxfmtrc.generated.json", "package.json", ".git" },
-        })
-        vim.lsp.enable("oxfmt")
-
         -- Register JS debug adapters with dynamic port allocation
         local dap = require('dap')
         local js_debug_path = "${pkgs.vscode-js-debug}/lib/node_modules/js-debug/dist/src/dapDebugServer.js"
@@ -822,20 +798,55 @@
               checkstyle.enable = true;
               codespell.enable = true;
             };
-            formatting = {
-              alejandra.enable = true;
-              stylua.enable = true;
-              shfmt.enable = true;
-              nixpkgs_fmt.enable = true;
-              google_java_format.enable = false;
-              prettier = {
-                enable = false;
-                disableTsServerFormatter = true;
-              };
-            };
             completion = {
               luasnip.enable = true;
               spell.enable = true;
+            };
+          };
+        };
+
+        # Formatting: explicit formatters for nix/lua/sh. For JS/TS/JSON/CSS,
+        # try each formatter in order and use whichever is actually installed
+        # in the project's own node_modules (stop_after_first) — no hardcoded
+        # "always use X" assumption about what a given repo uses. Everything
+        # else (e.g. Rust) falls back to whatever the attached LSP can format.
+        conform-nvim = {
+          enable = true;
+          autoInstall = {
+            enable = true;
+            # These are resolved per-project from node_modules, not installed
+            # globally — a global fallback would defeat the point of
+            # detecting what each repo actually uses.
+            overrides = {
+              oxfmt = null;
+              prettier = null;
+              biome = null;
+            };
+          };
+          settings = let
+            jsFormatters = {
+              __unkeyed-1 = "oxfmt";
+              __unkeyed-2 = "prettier";
+              __unkeyed-3 = "biome";
+              stop_after_first = true;
+            };
+          in {
+            formatters_by_ft = {
+              nix = ["alejandra"];
+              lua = ["stylua"];
+              sh = ["shfmt"];
+              bash = ["shfmt"];
+              javascript = jsFormatters;
+              javascriptreact = jsFormatters;
+              typescript = jsFormatters;
+              typescriptreact = jsFormatters;
+              json = jsFormatters;
+              jsonc = jsFormatters;
+              css = jsFormatters;
+            };
+            format_on_save = {
+              lsp_format = "fallback";
+              timeout_ms = 3000;
             };
           };
         };
@@ -879,7 +890,7 @@
                   tsserver = {
                     maxTsServerMemory = 8192;
                     watchOptions = {
-                      excludeDirectories = [ "**/node_modules" "**/.git" "**/dist" "**/.nx" "**/coverage" "**/test-results" ];
+                      excludeDirectories = ["**/node_modules" "**/.git" "**/dist" "**/.nx" "**/coverage" "**/test-results"];
                     };
                   };
                   suggest = {
@@ -986,7 +997,7 @@
             executables = {
               debugpy = {
                 command = "${pkgs.python3Packages.debugpy}/bin/python";
-                args = [ "-m" "debugpy.adapter" ];
+                args = ["-m" "debugpy.adapter"];
               };
             };
           };
