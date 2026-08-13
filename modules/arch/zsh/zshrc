@@ -21,8 +21,8 @@ fastfetch
 export PATH=$HOME/.local/bin:$PATH
 export EDITOR='nvim'
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent"
-
-#psql 
+export BUN_INSTALL="$HOME/.bun" 
+export PATH="$BUN_INSTALL/bin:$PATH" 
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 #NVM
@@ -37,5 +37,7 @@ export NVM_DIR="$HOME/.nvm"
 # Key bindings for history substring search
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+
+
 
 export PATH=/usr/bin:/usr/local/bin:$PATH
