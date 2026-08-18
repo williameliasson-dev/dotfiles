@@ -10,9 +10,9 @@
         margin-left = 0;
         margin-right = 0;
         spacing = 5;
-        modules-left = [ "custom/logo" "hyprland/workspaces" ];
-        modules-center = [ "clock" ];
-        modules-right = [ "pulseaudio" "network" "custom/nordlayer" "battery" "custom/power" ];
+        modules-left = ["custom/logo" "hyprland/workspaces"];
+        modules-center = ["clock"];
+        modules-right = ["pulseaudio" "network" "custom/nordlayer" "battery" "custom/power"];
 
         "custom/logo" = {
           format = "";
@@ -24,7 +24,7 @@
           all-outputs = true;
           format = "{icon}";
           format-icons = {
-            "1" = "󱄅";
+            "1" = "󰣇";
             "2" = "󰎧";
             "3" = "󰎪";
             "4" = "󰎭";
@@ -54,7 +54,7 @@
           format-charging = "{capacity}% ";
           format-plugged = "{capacity}% ";
           format-alt = "{time} {icon}";
-          format-icons = [ "" "" "" "" "" ];
+          format-icons = ["" "" "" "" ""];
         };
 
         "network" = {
@@ -80,7 +80,7 @@
             phone = "";
             portable = "";
             car = "";
-            default = [ "" "" "" ];
+            default = ["" "" ""];
           };
           on-click = "pavucontrol";
         };
