@@ -477,92 +477,6 @@
           };
         }
 
-        # CMP
-
-        {
-          mode = "i";
-          key = "<C-@>";
-          action.__raw = ''
-            function()
-              local cmp = require('cmp')
-              if not cmp.visible() then
-                return cmp.complete()
-              end
-            end
-          '';
-          options = {
-            silent = true;
-            desc = "Trigger suggestions";
-          };
-        }
-
-        {
-          mode = "i";
-          key = "<C-Space>";
-          action.__raw = ''
-            function()
-              local cmp = require('cmp')
-              if not cmp.visible() then
-                return cmp.complete()
-              end
-            end
-          '';
-          options = {
-            silent = true;
-            desc = "Trigger suggestions";
-          };
-        }
-
-        {
-          mode = "i";
-          key = "<C-y>";
-          action = "<Cmd>lua require('cmp').confirm({ select = true })<CR>";
-          options = {
-            silent = true;
-          };
-        }
-        {
-          mode = "i";
-          key = "<C-j>";
-          action.__raw = ''
-            function()
-              local cmp = require('cmp')
-              if cmp.visible() then
-                return cmp.mapping.select_next_item()()
-              end
-            end
-          '';
-          options.silent = true;
-        }
-        {
-          mode = "i";
-          key = "<C-k>";
-          action.__raw = ''
-            function()
-              local cmp = require('cmp')
-              if cmp.visible() then
-                return cmp.mapping.select_prev_item()()
-              end
-            end
-          '';
-          options.silent = true;
-        }
-        {
-          mode = "i";
-          key = "<C-e>";
-          action.__raw = ''
-                function()
-                  local cmp = require('cmp')
-                  if cmp.visible() then
-                    return cmp.mapping.abort()()
-                  end
-            end
-          '';
-          options = {
-            silent = true;
-            desc = "Cancel completion";
-          };
-        }
       ];
 
       extraPlugins = with pkgs.vimPlugins; [
@@ -740,38 +654,39 @@
 
         luasnip.enable = true;
 
-        cmp = {
+        blink-cmp = {
           enable = true;
-          autoEnableSources = true;
           settings = {
-            snippet = {
-              expand = ''
-                function(args)
-                            require('luasnip').lsp_expand(args.body)
-                          end'';
+            keymap = {
+              preset = "none";
+              "<C-space>" = ["show"];
+              "<C-@>" = ["show"];
+              "<C-y>" = ["select_and_accept"];
+              "<C-j>" = ["select_next"];
+              "<C-k>" = ["select_prev"];
+              "<C-e>" = ["hide"];
             };
-            sources = [
-              {
-                name = "nvim_lsp";
-                priority = 900;
-              }
-              {
-                name = "luasnip";
-                priority = 800;
-              }
-              {
-                name = "path";
-                priority = 700;
-              }
-              {
-                name = "buffer";
-                priority = 600;
-              }
-              {
-                name = "vim-dadbod-completion";
-                priority = 500;
-              }
-            ];
+            snippets = {
+              expand.__raw = "function(snippet) require('luasnip').lsp_expand(snippet) end";
+              active.__raw = "function(filter) return require('luasnip').in_snippet() end";
+              jump.__raw = "function(direction) require('luasnip').jump(direction) end";
+            };
+            sources = {
+              # Command-line completion stays on wilder; avoid a second popup on ":"
+              cmdline = [];
+              default = ["lsp" "path" "snippets" "buffer"];
+              per_filetype = {
+                sql = ["snippets" "dadbod" "buffer"];
+                mysql = ["snippets" "dadbod" "buffer"];
+                plsql = ["snippets" "dadbod" "buffer"];
+              };
+              providers = {
+                dadbod = {
+                  name = "Dadbod";
+                  module = "vim_dadbod_completion.blink";
+                };
+              };
+            };
           };
         };
 
