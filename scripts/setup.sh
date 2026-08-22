@@ -91,7 +91,6 @@ if [ "$PLATFORM" = "linux" ]; then
 		python-gitpython \
 		python-pillow \
 		python-pip \
-		python-textual-image \
 		seatd \
 		sof-firmware \
 		systemd-resolvconf \
@@ -128,10 +127,6 @@ if [ "$PLATFORM" = "linux" ]; then
 
 	# Install AUR packages
 	yay -S --needed --noconfirm \
-		jiratui-git \
-		nordlayer \
-		postman-bin \
-		slack-desktop \
 		spotify-launcher \
 		ungoogled-chromium-bin \
 		visual-studio-code-bin
