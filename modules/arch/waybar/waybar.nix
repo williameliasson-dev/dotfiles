@@ -1,4 +1,14 @@
 {
+  home.file.".config/waybar/scripts/power-profile.sh" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+      current=$(powerprofilesctl get)
+      choice=$(printf 'performance\nbalanced\npower-saver\n' | rofi -dmenu -p "Power Profile (current: $current)")
+      [ -n "$choice" ] && powerprofilesctl set "$choice"
+    '';
+  };
+
   programs.waybar = {
     enable = true;
     settings = {
@@ -51,10 +61,13 @@
             critical = 15;
           };
           format = "{capacity}% {icon}";
-          format-charging = "{capacity}% ";
-          format-plugged = "{capacity}% ";
-          format-alt = "{time} {icon}";
-          format-icons = ["" "" "" "" ""];
+          format-charging = "{capacity}% {icon}";
+          format-plugged = "{capacity}% {icon}";
+          format-icons = {
+            charging = ["" "" "" "" ""];
+            default = ["" "" "" "" ""];
+          };
+          on-click = "~/.config/waybar/scripts/power-profile.sh";
         };
 
         "network" = {
@@ -63,7 +76,7 @@
           tooltip-format = "{ifname} via {gwaddr} ";
           format-linked = "{ifname} (No IP) ";
           format-disconnected = "󰤭";
-          format-alt = "{ifname}: {ipaddr}/{cidr}";
+          on-click = "iwmenu -l rofi";
         };
 
         "pulseaudio" = {
