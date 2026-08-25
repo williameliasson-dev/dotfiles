@@ -476,7 +476,6 @@
             silent = true;
           };
         }
-
       ];
 
       extraPlugins = with pkgs.vimPlugins; [
@@ -658,13 +657,7 @@
           enable = true;
           settings = {
             keymap = {
-              preset = "none";
-              "<C-space>" = ["show"];
-              "<C-@>" = ["show"];
-              "<C-y>" = ["select_and_accept"];
-              "<C-j>" = ["select_next"];
-              "<C-k>" = ["select_prev"];
-              "<C-e>" = ["hide"];
+              preset = "super-tab";
             };
             snippets = {
               expand.__raw = "function(snippet) require('luasnip').lsp_expand(snippet) end";
