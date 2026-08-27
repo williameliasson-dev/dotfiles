@@ -12,10 +12,6 @@
     };
 
     ignores = [
-      ".devenv*"
-      "devenv.local.nix"
-      "devenv.nix"
-      "devenv.lock"
       ".direnv"
       ".envrc"
       ".temp" # Added

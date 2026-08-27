@@ -15,6 +15,7 @@
     ../modules/arch/dunst.nix
     ../modules/arch/hyprlock/hyprlock.nix
     ../modules/arch/fastfetch/fastfetch.nix
+    ../modules/arch/wob/wob.nix
     inputs.nixvim.homeModules.nixvim
   ];
 
