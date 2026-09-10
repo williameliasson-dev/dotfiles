@@ -441,17 +441,26 @@
           };
         }
         {
-          action = "<cmd>Telescope lsp_definitions<CR>";
           key = "gd";
+          action.__raw = ''
+            function()
+              vim.lsp.buf.definition({ reuse_win = true })
+            end
+          '';
           options = {
             desc = "Jump to definition";
+            silent = true;
           };
         }
         {
-          action = "<cmd>Telescope lsp_references<CR>";
+          action = "<cmd>Telescope lsp_references include_declaration=false<CR>";
           key = "gr";
           options = {
             desc = "Go to references";
+            # Neovim 0.12 defines gra/grn/grr/gri/grt. Without nowait, this
+            # exact `gr` mapping pauses for timeoutlen before it can run.
+            nowait = true;
+            silent = true;
           };
         }
         {
@@ -515,6 +524,11 @@
         })
 
         vim.diagnostic.config({ virtual_text = false, virtual_lines = { current_line = true } })
+
+        -- LSP file logging off. Every warn/error is a synchronous write, and a
+        -- noisy server can grow lsp.log to hundreds of MB. Re-enable with
+        -- :lua vim.lsp.set_log_level("warn") when debugging a server.
+        vim.lsp.set_log_level("off")
 
         require('spectre').setup()
         require('kitty-scrollback').setup()
@@ -781,54 +795,27 @@
         lsp = {
           enable = true;
           servers = {
-            vtsls = {
-              enable = true;
-              settings = {
-                # Limit memory and reduce scope
-                vtsls = {
-                  experimental = {
-                    maxInlayHintLength = 30;
-                    completion = {
-                      enableServerSideFuzzyMatch = true;
-                    };
-                  };
-                };
-                typescript = {
-                  enableProjectDiagnostics = false;
-                  tsserver = {
-                    maxTsServerMemory = 8192;
-                    watchOptions = {
-                      excludeDirectories = ["**/node_modules" "**/.git" "**/dist" "**/.nx" "**/coverage" "**/test-results"];
-                    };
-                  };
-                  suggest = {
-                    completeFunctionCalls = true;
-                    autoImports = true; # Keep auto imports
-                  };
-                  format = {
-                    enable = false; # Use oxfmt instead
-                  };
-                  # Disable file move updates to reduce load
-                  updateImportsOnFileMove = {
-                    enabled = "never";
-                  };
-                };
-                javascript = {
-                  suggest = {
-                    completeFunctionCalls = true;
-                    autoImports = true; # Keep auto imports
-                  };
-                  format = {
-                    enable = false; # Use oxfmt instead
-                  };
-                  updateImportsOnFileMove = {
-                    enabled = "never";
-                  };
-                };
-              };
-            };
+            # Native TypeScript 7 language server. This replaces the
+            # JavaScript-based vtsls/tsserver stack and is substantially faster
+            # for project loading, definitions, and references.
+            tsgo.enable = true;
             cssls.enable = true; # CSS
-            tailwindcss.enable = true; # TailwindCSS
+            # TailwindCSS. Scoped to filetypes that can actually hold Tailwind
+            # classes — by default it also attaches to plain .ts, where in a
+            # large monorepo it burns CPU and spams lsp.log with realpath
+            # ENOENT stack traces for CSS entrypoints that don't exist.
+            tailwindcss = {
+              enable = true;
+              filetypes = [
+                "html"
+                "css"
+                "scss"
+                "javascriptreact"
+                "typescriptreact"
+                "svelte"
+                "vue"
+              ];
+            };
             html.enable = true; # HTML
             pyright.enable = true; # Python
             marksman.enable = true; # Markdown

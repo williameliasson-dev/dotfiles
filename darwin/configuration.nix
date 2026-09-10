@@ -1,6 +1,7 @@
-{ pkgs
-, inputs
-, ...
+{
+  pkgs,
+  inputs,
+  ...
 }: {
   # Nix settings
   nix.settings.experimental-features = "nix-command flakes";
@@ -19,7 +20,7 @@
       autoUpdate = true;
       cleanup = "zap"; # Remove formulae not listed here
       upgrade = true;
-      extraFlags = [ "--force" ]; # Homebrew 4.x requires --force with --cleanup
+      extraFlags = ["--force"]; # Homebrew 4.x requires --force with --cleanup
     };
 
     # Homebrew formulae (CLI tools)
@@ -52,6 +53,7 @@
       "dbeaver-community"
       "insomnia"
       "codex"
+      "crmne/tap/fastpotify"
     ];
 
     # Mac    App Store apps (requires `mas` CLI)
