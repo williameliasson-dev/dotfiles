@@ -146,32 +146,11 @@
           options.desc = "Exit terminal mode";
         }
 
-        # Claude Code
+        # Codex
         {
           key = "<leader>cc";
-          action = "<cmd>ClaudeCode<CR>";
-          options.desc = "Toggle Claude Code";
-        }
-        {
-          key = "<leader>cf";
-          action = "<cmd>ClaudeCodeFocus<CR>";
-          options.desc = "Focus Claude Code";
-        }
-        {
-          mode = "v";
-          key = "<leader>cs";
-          action = "<cmd>ClaudeCodeSend<CR>";
-          options.desc = "Send selection to Claude";
-        }
-        {
-          key = "<leader>ca";
-          action = "<cmd>ClaudeCodeDiffAccept<CR>";
-          options.desc = "Accept Claude diff";
-        }
-        {
-          key = "<leader>cd";
-          action = "<cmd>ClaudeCodeDiffDeny<CR>";
-          options.desc = "Deny Claude diff";
+          action = "<cmd>Codex<CR>";
+          options.desc = "Toggle Codex";
         }
 
         #TELESCOPE
@@ -489,7 +468,6 @@
 
       extraPlugins = with pkgs.vimPlugins; [
         snacks-nvim
-        claudecode-nvim
         kitty-scrollback-nvim
         nvim-spectre
       ];
@@ -532,13 +510,6 @@
 
         require('spectre').setup()
         require('kitty-scrollback').setup()
-
-        require('claudecode').setup({
-          terminal = {
-            split_side = "right",
-            split_width_percentage = 0.4,
-          },
-        })
 
         -- Register JS debug adapters with dynamic port allocation
         local dap = require('dap')
@@ -598,6 +569,16 @@
       plugins = {
         comment = {
           enable = true;
+        };
+
+        codex = {
+          enable = true;
+          settings = {
+            border = "rounded";
+            width = 0.8;
+            height = 0.8;
+            keymaps = {};
+          };
         };
 
         wilder = {
@@ -798,7 +779,12 @@
             # Native TypeScript 7 language server. This replaces the
             # JavaScript-based vtsls/tsserver stack and is substantially faster
             # for project loading, definitions, and references.
-            tsgo.enable = true;
+            tsgo = {
+              enable = true;
+              # Nixvim still defaults to typescript-go; TypeScript 7 ships tsc.
+              package = pkgs.typescript;
+              cmd = [ "${pkgs.typescript}/bin/tsc" "--lsp" "--stdio" ];
+            };
             cssls.enable = true; # CSS
             # TailwindCSS. Scoped to filetypes that can actually hold Tailwind
             # classes — by default it also attaches to plain .ts, where in a

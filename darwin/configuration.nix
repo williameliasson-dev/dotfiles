@@ -53,7 +53,6 @@
       "dbeaver-community"
       "insomnia"
       "codex"
-      "crmne/tap/fastpotify"
     ];
 
     # Mac    App Store apps (requires `mas` CLI)
