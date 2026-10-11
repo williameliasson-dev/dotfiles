@@ -223,7 +223,7 @@ else
 
 # Auto-start Hyprland on TTY1
 if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
-  exec Hyprland
+  exec start-hyprland
 fi
 EOF
 			echo -e "${GREEN}Auto-start configured in $PROFILE_FILE${NC}"
