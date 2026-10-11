@@ -85,6 +85,7 @@
   programs = {
     home-manager.enable = true;
     nixvim.nixpkgs.source = inputs.nixpkgs;
+    nixvim.nixpkgs.config.allowUnfree = true;
   };
 
   programs.gh.enable = true;
