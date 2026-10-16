@@ -14,6 +14,10 @@
       url = "github:LnL7/nix-darwin/";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    system-manager = {
+      url = "github:numtide/system-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     {
@@ -21,6 +25,7 @@
       nixpkgs,
       home-manager,
       nix-darwin,
+      system-manager,
       ...
     }@inputs:
     let
@@ -38,6 +43,11 @@
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home-manager/arch.nix ];
         };
+      };
+
+      # system-manager configuration (system-level /etc + systemd on Arch Linux)
+      systemConfigs.default = system-manager.lib.makeSystemConfig {
+        modules = [ ./system-manager/arch.nix ];
       };
 
       # nix-darwin configurations (for macOS)

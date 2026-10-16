@@ -36,7 +36,7 @@ echo ""
 # Arch Linux specific setup
 # ──────────────────────────────────────
 if [ "$PLATFORM" = "linux" ]; then
-	echo -e "${GREEN}[1/9] Enabling multilib repository...${NC}"
+	echo -e "${GREEN}[1/10] Enabling multilib repository...${NC}"
 	if ! grep -q "^\[multilib\]" /etc/pacman.conf; then
 		echo -e "${YELLOW}Enabling multilib for 32-bit support...${NC}"
 		sudo sed -i '/\[multilib\]/,/Include/ s/^#//' /etc/pacman.conf
@@ -45,7 +45,7 @@ if [ "$PLATFORM" = "linux" ]; then
 		echo -e "${YELLOW}Multilib already enabled${NC}"
 	fi
 
-	echo -e "${GREEN}[2/9] Installing essential Arch packages...${NC}"
+	echo -e "${GREEN}[2/10] Installing essential Arch packages...${NC}"
 	sudo pacman -Syu --needed --noconfirm \
 		alsa-utils \
 		base \
@@ -138,7 +138,7 @@ fi
 STEP=3
 [ "$PLATFORM" = "darwin" ] && STEP=1
 
-echo -e "${GREEN}[${STEP}/$([ "$PLATFORM" = "darwin" ] && echo 4 || echo 9)] Installing Nix...${NC}"
+echo -e "${GREEN}[${STEP}/$([ "$PLATFORM" = "darwin" ] && echo 4 || echo 10)] Installing Nix...${NC}"
 if ! command -v nix &>/dev/null; then
 	if [ "$PLATFORM" = "darwin" ]; then
 		sh <(curl -L https://nixos.org/nix/install)
@@ -153,14 +153,14 @@ else
 fi
 
 ((STEP++))
-echo -e "${GREEN}[${STEP}/$([ "$PLATFORM" = "darwin" ] && echo 4 || echo 9)] Enabling Nix flakes...${NC}"
+echo -e "${GREEN}[${STEP}/$([ "$PLATFORM" = "darwin" ] && echo 4 || echo 10)] Enabling Nix flakes...${NC}"
 mkdir -p ~/.config/nix
 if ! grep -q "experimental-features" ~/.config/nix/nix.conf 2>/dev/null; then
 	echo "experimental-features = nix-command flakes" >>~/.config/nix/nix.conf
 fi
 
 ((STEP++))
-echo -e "${GREEN}[${STEP}/$([ "$PLATFORM" = "darwin" ] && echo 4 || echo 9)] Sourcing Nix environment...${NC}"
+echo -e "${GREEN}[${STEP}/$([ "$PLATFORM" = "darwin" ] && echo 4 || echo 10)] Sourcing Nix environment...${NC}"
 if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
 	. '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
 elif [ -e '/etc/bashrc' ]; then
@@ -168,7 +168,7 @@ elif [ -e '/etc/bashrc' ]; then
 fi
 
 ((STEP++))
-echo -e "${GREEN}[${STEP}/$([ "$PLATFORM" = "darwin" ] && echo 4 || echo 9)] Cloning dotfiles repo...${NC}"
+echo -e "${GREEN}[${STEP}/$([ "$PLATFORM" = "darwin" ] && echo 4 || echo 10)] Cloning dotfiles repo...${NC}"
 REPO_URL="https://github.com/williameliasson-dev/nixos.git"
 DOTFILES_DIR="$HOME/dotfiles"
 if [ -d "$DOTFILES_DIR" ]; then
@@ -188,7 +188,7 @@ if [ "$PLATFORM" = "darwin" ]; then
 	sudo nix run nix-darwin -- switch --flake "$DOTFILES_DIR#macos"
 else
 	((STEP++))
-	echo -e "${GREEN}[${STEP}/9] Installing home-manager...${NC}"
+	echo -e "${GREEN}[${STEP}/10] Installing home-manager...${NC}"
 	echo "Available configurations:"
 	echo "  - william@arch"
 	echo ""
@@ -200,7 +200,7 @@ else
 	nix run home-manager -- switch --flake "$DOTFILES_DIR#$CONFIG_NAME"
 
 	((STEP++))
-	echo -e "${GREEN}[${STEP}/9] Installing touchpad resume-fix hook...${NC}"
+	echo -e "${GREEN}[${STEP}/10] Installing touchpad resume-fix hook...${NC}"
 	TOUCHPAD_FIX_SRC="$DOTFILES_DIR/modules/arch/hyprland/touchpad-resume-fix.sh"
 	if [ -f "$TOUCHPAD_FIX_SRC" ]; then
 		sudo install -m 755 "$TOUCHPAD_FIX_SRC" /usr/lib/systemd/system-sleep/touchpad-resume-fix
@@ -209,7 +209,13 @@ else
 	fi
 
 	((STEP++))
-	echo -e "${GREEN}[${STEP}/9] Setting up auto-start Hyprland (optional)...${NC}"
+	echo -e "${GREEN}[${STEP}/10] Applying system-manager configuration...${NC}"
+	nix run github:numtide/system-manager -- switch --flake "$DOTFILES_DIR" --sudo
+	# Reload logind so the power-key drop-in takes effect without a reboot
+	sudo systemctl kill -s HUP systemd-logind
+
+	((STEP++))
+	echo -e "${GREEN}[${STEP}/10] Setting up auto-start Hyprland (optional)...${NC}"
 	read -p "Auto-start Hyprland on TTY1 login? (y/n): " AUTO_START
 	if [[ "$AUTO_START" =~ ^[Yy]$ ]]; then
 		if [ -n "$ZSH_VERSION" ] || [ -f "$HOME/.zshrc" ]; then
@@ -245,6 +251,7 @@ else
 	echo "1. Log out and log back in (or reboot)"
 	echo "2. Either Hyprland will auto-start, or type 'Hyprland' to launch"
 	echo "3. To rebuild: home-manager switch --flake ~/dotfiles#william@arch"
+	echo "4. To rebuild system config: nix run github:numtide/system-manager -- switch --flake ~/dotfiles --sudo"
 fi
 echo ""
 echo "Your dotfiles are at: $DOTFILES_DIR"
