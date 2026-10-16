@@ -4,94 +4,55 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This is a NixOS configuration repository using Nix flakes with integrated Home Manager. It manages system configurations for both desktop and laptop machines, with modular configuration files organized by function.
+Nix flake managing dotfiles for two machines:
+- **Arch Linux laptop** (Hyprland/Wayland) — standalone Home Manager for user config, plus [system-manager](https://github.com/numtide/system-manager) for system-level `/etc` and systemd config. Arch packages themselves are installed with pacman/yay via `scripts/setup.sh`, not Nix.
+- **macOS** — nix-darwin with Home Manager as a module (plus Homebrew via nix-darwin).
 
-## Architecture
+This is not NixOS: there is no `nixosConfigurations` output.
 
-### Repository Structure
-- `flake.nix` - Main flake configuration defining inputs, outputs, and system configurations
-- `system/` - NixOS system configurations (desktop-configuration.nix, laptop-configuration.nix)
-- `home-manager/` - Home Manager configurations (desktop.nix, laptop.nix) 
-- `modules/shared/` - Reusable configuration modules for applications and services
+## Repository Structure
 
-### Configuration Types
-- **NixOS Configurations**: Two systems defined - "desktop" and "laptop"
-- **Home Manager Configurations**: Standalone configurations for user "william"
-- **Shared Modules**: Individual .nix files for specific applications (vim, git, hyprland, etc.)
-
-### Key Components
-- Uses Hyprland as the window manager with Wayland
-- Includes nixvim for Neovim configuration with LSP support
-- Docker virtualization enabled
-- Audio through PipeWire
-- Bluetooth support with experimental features
+- `flake.nix` — inputs (nixpkgs-unstable, home-manager, nixvim, nix-darwin, system-manager) and outputs:
+  - `homeConfigurations."william@arch"` → `home-manager/arch.nix`
+  - `systemConfigs.default` → `system-manager/arch.nix`
+  - `darwinConfigurations.macos` → `darwin/configuration.nix` + `home-manager/macos.nix`
+- `home-manager/` — per-platform Home Manager entry points (`arch.nix`, `macos.nix`) that import modules and list user packages.
+- `system-manager/arch.nix` — system-level entry point for Arch.
+- `darwin/configuration.nix` — nix-darwin system config (Homebrew brews/casks, macOS defaults).
+- `modules/shared/` — Home Manager modules used on both platforms (kitty, vim/nixvim, git, yazi, oh-my-posh theme).
+- `modules/arch/` — Arch-only modules (Hyprland, hyprlock/hypridle, waybar, rofi, dunst, wob, zsh, fastfetch, hyprpaper). Most are Home Manager modules that write config files via `home.file`; `logind.nix` is a system-manager module.
+- `modules/macos/` — macOS-only Home Manager modules (aerospace, zsh, fastfetch).
+- `scripts/setup.sh` — bootstrap for a fresh machine: pacman/AUR packages, Nix install, Home Manager switch, touchpad resume hook, system-manager switch, Hyprland autostart.
 
 ## Common Commands
 
-### Building and Switching Configurations
 ```bash
-# Build and switch NixOS configuration (desktop)
-sudo nixos-rebuild switch --flake .#desktop
+# Arch: user config
+home-manager switch --flake ~/dotfiles#william@arch
 
-# Build and switch NixOS configuration (laptop)  
-sudo nixos-rebuild switch --flake .#laptop
+# Arch: system config (/etc, systemd). Run from ~/dotfiles — it writes a ./result symlink.
+nix run github:numtide/system-manager -- switch --flake . --sudo
 
-# Switch Home Manager configuration only (desktop)
-home-manager switch --flake .#"william@desktop"
+# macOS
+sudo darwin-rebuild switch --flake ~/dotfiles#macos
 
-# Switch Home Manager configuration only (laptop)
-home-manager switch --flake .#"william@laptop"
+# Build without applying
+nix build .#systemConfigs.default --no-link
+nix build .#homeConfigurations."william@arch".activationPackage --no-link
 
-# Test configuration without switching
-sudo nixos-rebuild test --flake .#desktop
-```
-
-### Development Commands
-```bash
-# Update flake inputs
+# Update inputs
 nix flake update
-
-# Show flake info
-nix flake show
-
-# Check flake for issues
-nix flake check
-
-# Build without switching (faster testing)
-nixos-rebuild build --flake .#desktop
 ```
 
-### Package Management
-```bash
-# Search for packages
-nix search nixpkgs <package-name>
+## system-manager Notes
 
-# Install package temporarily
-nix shell nixpkgs#<package-name>
-
-# Run package without installing
-nix run nixpkgs#<package-name>
-```
-
-## Development Workflow
-
-1. Edit configuration files in appropriate directories
-2. Test changes with `nixos-rebuild test` or `home-manager switch`
-3. If satisfied, use `nixos-rebuild switch` to make changes permanent
-4. Commit changes to git after successful builds
-
-## Module System
-
-Each application/service has its own module in `modules/shared/`:
-- Individual .nix files configure specific programs
-- Modules are imported in home-manager configurations
-- Settings are declarative and reproducible
+- Configured with `system-manager.allowAnyDistro = true` because Arch is not officially supported.
+- `services.userborn.enable = false` is deliberate: userborn would rewrite `/etc/passwd` and `/etc/group` with NixOS GIDs that clash with Arch's. Keep it disabled.
+- Use `environment.etc."<path>"` for config drop-ins (e.g. `modules/arch/logind.nix` writes `/etc/systemd/logind.conf.d/power-key.conf`).
+- logind changes need `sudo systemctl kill -s HUP systemd-logind` (reload) — never restart logind, it kills the graphical session.
 
 ## Important Notes
 
-- The system user is "william" with zsh as default shell
-- Docker group membership is configured for the user
-- Hyprland with Wayland session is the primary desktop environment
-- System allows unfree packages globally
-- Uses systemd-boot with 0 timeout
-- Time zone set to Europe/Stockholm with Swedish locale settings
+- User is `william` with zsh as the shell on both platforms.
+- Unfree packages are allowed (`config.allowUnfree = true`, also for nixvim).
+- The touchpad resume fix (`modules/arch/hyprland/touchpad-resume-fix.sh`) is installed by `setup.sh` into `/usr/lib/systemd/system-sleep/`, outside Nix.
